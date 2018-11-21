@@ -2,9 +2,7 @@
 
 > echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 
-> sudo apt-get update && sudo apt-get install yarn
-
-> sudo apt-get install rails postgresql
+> sudo apt-get update && sudo apt-get install yarn rails postgresql
 
 > sudo -i -u postgres
 
