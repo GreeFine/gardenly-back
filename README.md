@@ -1,24 +1,84 @@
-# README
+> curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+> echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 
-Things you may want to cover:
+> sudo apt-get update && sudo apt-get install yarn rails postgresql
 
-* Ruby version
+> sudo -i -u postgres
 
-* System dependencies
+> createuser --interactive (avec son username sur le pc)
 
-* Configuration
 
-* Database creation
 
-* Database initialization
+Si il dit que ya pas de postgres qui run
+> sudo service postgresql start
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
+> gem install bundler
 
-* ...
+
+
+in /gardenly
+> bundle install (si il pete un cable sur la version, changer la version de Ruby dans le fichier Gemfile tout en haut a celle de son PC)
+
+> yarn
+
+> bundle exec rails db:create
+
+> bundle exec rails db:migrate
+
+
+
+> bundle exec rails s (lance le serv) > app running on localhost:3000
+
+> ./bin/webpack-dev-server (lance webpack pour compiler le js)
+
+> bundle exec rails c (lance la console rails)
+
+
+structure du repo
+> gardenly/app/
+
+contient toute l'app (controlleurs, models, etc)
+
+> gardenly/app/javascript/packs/
+
+contient le front
+
+> gardenly/db/
+
+contient les migration et le schema de la db
+
+Ajouter des gems
+> gem 'toto' dans le Gemfile
+
+> bundle install (pour les installer)
+
+
+Ajouter des packages js
+> "graphql": "^14.0.0" dans les dependances dans package.json
+
+> yarn (pour les installer)
+
+
+Creer un modele
+> bundle exec rails g model user
+
+
+Creer un controlleur
+> bundle exec rails g controller user
+
+
+Creer une resource entiere (moddele+controlleur+views+routing)
+> bundle exec rails g resource user
+
+
+Creer une migration
+> bundle exec rails g migration add_name_and_age_to_user
+
+
+Appliquer la migration
+> bundle exec rails db:migrate
+
+
