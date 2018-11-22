@@ -18,6 +18,9 @@ gem 'uglifier', '>= 1.3.0'
 
 gem 'webpacker'
 
+gem 'graphql'
+
+
 # Use CoffeeScript for .coffee assets and views
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -62,3 +65,5 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'figaro'
+
+gem 'graphiql-rails', group: :development
