@@ -17,7 +17,7 @@ Si il dit que ya pas de postgres qui run
 
 > gem install bundler
 
-
+> sudo apt-get install libpq-dev
 
 in /gardenly
 > bundle install (si il pete un cable sur la version, changer la version de Ruby dans le fichier Gemfile tout en haut a celle de son PC)
