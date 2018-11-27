@@ -19,6 +19,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'webpacker'
 
 gem 'graphql'
+gem 'rack-cors'
 
 
 # Use CoffeeScript for .coffee assets and views

@@ -9,6 +9,7 @@ class GraphqlController < ApplicationController
       # current_user: current_user,
     }
     result = GardenlySchema.execute(query, variables: variables, context: context, operation_name: operation_name)
+    puts "\n\n\n\n#{result.to_h}\n\n\n\n"
     render json: result
   rescue => e
     raise e unless Rails.env.development?
