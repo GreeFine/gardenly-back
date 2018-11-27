@@ -1,5 +1,6 @@
 class GraphqlController < ApplicationController
   def execute
+    puts "\n\n\n\n#{params}\n\n\n\n"
     variables = ensure_hash(params[:variables])
     query = params[:query]
     operation_name = params[:operationName]
