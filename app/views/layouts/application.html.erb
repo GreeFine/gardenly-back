@@ -3,13 +3,10 @@
   <head>
     <title>Gardenly</title>
     <%= csrf_meta_tags %>
+    <%= javascript_pack_tag 'application' %>
   </head>
 
   <body style="margin: 0; height: 100vh; overflow-y: scroll !important">
-    <%= form_for :user, method: :post do |f| %>
-      <%= f.text_field :name %>
-      <%f.submit "ok" %>
-      <% end %>
     <%= yield %>
   </body>
 </html>

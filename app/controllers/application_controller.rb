@@ -4,7 +4,4 @@ class ApplicationController < ActionController::Base
   def index
   end
 
-  def show
-    User.create!(name: params[:user][:name])
-  end
 end
