@@ -17,6 +17,7 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'mini_racer', platforms: :ruby
 
 gem 'graphql'
+gem 'graphql-errors'
 gem 'rack-cors'
 
 # Use CoffeeScript for .coffee assets and views

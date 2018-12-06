@@ -7,10 +7,7 @@ class Mutations::CreateUser < Mutations::BaseMutation
   field :errors, [String], null: false
 
   def resolve(params)
-    user = User.find_or_create_by(email: params[:email]) do |user|
-      user.name = params[:name]
-      user.password = params[:password]
-    end
+    user = User.create!(name: params[:name], email: params[:email], password: params[:password])
 
     session = Session.new(user: user)
     if session.save
