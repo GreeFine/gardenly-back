@@ -13,6 +13,7 @@
 ActiveRecord::Schema.define(version: 2018_11_29_142752) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
 
