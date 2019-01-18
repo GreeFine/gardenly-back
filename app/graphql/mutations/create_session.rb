@@ -8,9 +8,10 @@ class Mutations::CreateSession < Mutations::BaseMutation
   def resolve(params)
     user = User.find_by(email: params[:email], password: params[:password])
 
-    #check password in secure way?
 
     session = Session.new(user: user)
+    context[:cookies][:some_cookie2] = {value: "gingerbread", httponly: true, expires: Time.now + 1.week}
+
     if session.save
       {
         session: session,
