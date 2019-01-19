@@ -9,8 +9,10 @@ class Mutations::CreateSession < Mutations::BaseMutation
     user = User.find_by(email: params[:email], password: params[:password])
 
 
-    session = Session.new(user: user)
-    context[:cookies][:some_cookie2] = {value: "gingerbread", httponly: true, expires: Time.now + 1.week}
+    session = Session.create(user: user)
+    byebug
+
+    context[:cookies][:token] = {value: session.uuid, httponly: true, expires: Time.now + 1.week}
 
     if session.save
       {
