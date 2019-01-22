@@ -5,6 +5,8 @@ class GraphqlController < ApplicationController
     query = params[:query]
     operation_name = params[:operationName]
     context = {
+      current_user: current_user,
+      current_session: current_session,
       cookies: cookies
     }
     result = GardenlySchema.execute(query, variables: variables, context: context, operation_name: operation_name)
@@ -12,6 +14,14 @@ class GraphqlController < ApplicationController
   rescue => e
     raise e unless Rails.env.development?
     handle_error_in_development e
+  end
+
+  def current_session
+    @current_session ||= Session.find_by(uuid: cookies[:token])
+  end
+
+  def current_user
+    @current_user ||= current_session.try(:user)
   end
 
   private

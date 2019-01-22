@@ -10,7 +10,6 @@ class Mutations::CreateSession < Mutations::BaseMutation
 
 
     session = Session.create(user: user)
-    byebug
 
     context[:cookies][:token] = {value: session.uuid, httponly: true, expires: Time.now + 1.week}
 

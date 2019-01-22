@@ -65,5 +65,8 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'figaro'
 gem 'faker'
+gem "mini_magick"
+gem 'carrierwave', '~> 1.2.3'
+gem 'carrierwave-base64'
 
 gem 'graphiql-rails', group: :development
