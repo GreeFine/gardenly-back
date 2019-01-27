@@ -3,4 +3,5 @@ class User < ApplicationRecord
   validates_uniqueness_of :email
 
   has_many :sessions
+  has_many :gardens
 end
