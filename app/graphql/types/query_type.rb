@@ -8,6 +8,7 @@ module Types
     root_type.fields = Util::FieldCombiner.combine([
       Types::Query::PlantQuery,
       Types::Query::UserQuery,
+      Types::Query::MediumQuery,
     ])
   end
 end
