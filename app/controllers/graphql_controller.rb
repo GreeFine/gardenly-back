@@ -9,6 +9,7 @@ class GraphqlController < ApplicationController
       current_session: current_session,
       cookies: cookies
     }
+    puts "\n\n-----\n#{context[:cookies][:token]}\n----\n\n"
     result = GardenlySchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
   rescue => e
@@ -17,7 +18,7 @@ class GraphqlController < ApplicationController
   end
 
   def current_session
-    @current_session ||= Session.find_by(uuid: cookies[:token])
+    @current_session ||= Session.find_by(uuid: cookies.signed[:token])
   end
 
   def current_user
