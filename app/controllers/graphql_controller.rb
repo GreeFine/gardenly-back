@@ -1,6 +1,5 @@
 class GraphqlController < ApplicationController
   def execute
-    puts "\n\n\n\n#{params}\n\n\n\n"
     variables = ensure_hash(params[:variables])
     query = params[:query]
     operation_name = params[:operationName]
@@ -9,7 +8,6 @@ class GraphqlController < ApplicationController
       current_session: current_session,
       cookies: cookies
     }
-    puts "\n\n-----\n#{context[:cookies][:token]}\n----\n\n"
     result = GardenlySchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
   rescue => e
@@ -18,6 +16,7 @@ class GraphqlController < ApplicationController
   end
 
   def current_session
+    puts "\n\n\n-----\n\n\n\n#{cookies.signed[:token]}\n\n\n\n\n\n"
     @current_session ||= Session.find_by(uuid: cookies.signed[:token])
   end
 
