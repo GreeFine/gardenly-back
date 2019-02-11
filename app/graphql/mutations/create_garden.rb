@@ -5,8 +5,6 @@ class Mutations::CreateGarden < Mutations::BaseMutation
   field :errors, [String], null: false
 
   def resolve(arguments)
-    puts "Args?:"
-    puts arguments
     garden = Garden.new(arguments)
     garden.user = context[:current_user]
 
