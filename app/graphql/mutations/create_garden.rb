@@ -5,6 +5,10 @@ class Mutations::CreateGarden < Mutations::BaseMutation
   field :errors, [String], null: false
 
   def resolve(arguments)
+    user = context[:current_user]
+    if user.nil?
+      return { errors: "Not connected" }
+    end
     garden = Garden.new(arguments)
     garden.user = context[:current_user]
 
