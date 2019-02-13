@@ -15,7 +15,6 @@ class Mutations::CreateSession < Mutations::BaseMutation
     end
 
     session = Session.create(user: user) # TOOD: Delete session when cookie expire (1week)
-
     if session.save
       context[:cookies].signed[:token] = {value: session.uuid, httponly: true, expires: Time.now + 1.week}
       {

@@ -37,6 +37,9 @@ module Resolvers
         type Types::UserType
 
         def call(obj, args, ctx)
+          if ctx[:current_user].nil?
+            return { errors: "Not logged" } # How To do this proprely ?
+          end
           ctx[:current_user]
         end
       end
