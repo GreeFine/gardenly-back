@@ -69,5 +69,5 @@ gem 'fog'
 gem "mini_magick"
 gem 'carrierwave', '~> 1.2.3'
 gem 'carrierwave-base64'
-
+gem 'rest-client'
 gem 'graphiql-rails', group: :development
