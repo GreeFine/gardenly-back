@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_12_013520) do
+ActiveRecord::Schema.define(version: 2019_02_17_001916) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -43,6 +43,8 @@ ActiveRecord::Schema.define(version: 2019_02_12_013520) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "user_id"
+    t.string "description"
+    t.string "picture"
   end
 
   create_table "moderators", force: :cascade do |t|
@@ -71,11 +73,6 @@ ActiveRecord::Schema.define(version: 2019_02_12_013520) do
   create_table "plants", force: :cascade do |t|
     t.string "name"
     t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "s3_uploads", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
