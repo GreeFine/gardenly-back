@@ -1,5 +1,5 @@
 class Mutations::CreateMedium < Mutations::BaseMutation
-  argument :title, String, required: true
+  argument :title, String, required: false
   argument :description, String, required: false
   argument :picture, String, required: true
 
@@ -8,19 +8,14 @@ class Mutations::CreateMedium < Mutations::BaseMutation
 
   def resolve(arguments)
     medium = Medium.new(arguments)
+    byebug
     medium.user = context[:current_user]
     # raise Pundit::NotAuthorizedError unless MediumPolicy.new(context[:current_user], medium).create?
 
-    if medium.save
+    if medium.save!
       {
         medium: medium,
         errors: [],
-      }
-    else
-      puts medium.errors.full_messages
-      {
-        medium: nil,
-        errors: medium.errors.full_messages
       }
     end
   end

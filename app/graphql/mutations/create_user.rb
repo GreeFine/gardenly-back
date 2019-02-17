@@ -10,7 +10,7 @@ class Mutations::CreateUser < Mutations::BaseMutation
     user = User.create!(name: params[:name], email: params[:email], password: params[:password])
 
     session = Session.create(user: user)
-    context[:cookies][:token] = {value: session.uuid, httponly: true, expires: Time.now + 1.week}
+    context[:cookies].signed[:token] = {value: session.uuid, httponly: true, expires: Time.now + 1.week}
 
     if session.save
       {
