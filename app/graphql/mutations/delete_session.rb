@@ -2,7 +2,10 @@ class Mutations::DeleteSession < Mutations::BaseMutation
   field :errors, [String], null: false
 
   def resolve
-    session = Session.find_by(uuid: context[:cookies][:token])
+    session = context[:current_session]
+    if session.nil?
+      return { errors: [ "Not connected" ] }
+    end
     context[:cookies].delete :token
     if session.destroy
       {

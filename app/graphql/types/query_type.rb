@@ -9,6 +9,7 @@ module Types
       Types::Query::PlantQuery,
       Types::Query::UserQuery,
       Types::Query::MediumQuery,
+      Types::Query::GardenQuery,
     ])
   end
 end

@@ -16,7 +16,6 @@ class GraphqlController < ApplicationController
   end
 
   def current_session
-    puts "\n\n\n-----ggg\n\n\n\n#{cookies.signed[:token]}\n\n\n\n\n\n"
     @current_session ||= Session.find_by(uuid: cookies.signed[:token])
   end
 

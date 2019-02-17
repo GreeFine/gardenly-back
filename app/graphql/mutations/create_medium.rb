@@ -8,7 +8,6 @@ class Mutations::CreateMedium < Mutations::BaseMutation
 
   def resolve(arguments)
     medium = Medium.new(arguments)
-    byebug
     medium.user = context[:current_user]
     # raise Pundit::NotAuthorizedError unless MediumPolicy.new(context[:current_user], medium).create?
 
