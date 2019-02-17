@@ -37,10 +37,7 @@ module Resolvers
         type Types::UserType
 
         def call(obj, args, ctx)
-          if ctx[:current_user].nil?
-            return { errors: "Not logged" } # How To do this proprely ?
-          end
-          ctx[:current_user]
+          ctx[:current_user] || GraphQL::ExecutionError.new("User not connected")
         end
       end
     end

@@ -32,6 +32,15 @@ module Resolvers
         end
       end
 
+      class GetAllUserGardens < GraphQL::Function
+        description 'Get all User Gardens'
+        type Types::GardenType.connection_type
+
+        def call(obj, args, ctx)
+          Garden.all
+        end
+      end
+
     end
   end
 end

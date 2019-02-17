@@ -9,5 +9,6 @@ module Types
     field :address, String, null: true
     field :date_of_birth, String, null: true
     field :phone_number, String, null: true
+    field :gardens, [Types::GardenType], null: false
   end
 end

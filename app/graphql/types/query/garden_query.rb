@@ -8,6 +8,7 @@ module Types
       field :getGarden, function: GetGarden.new
       field :getGardens, function: GetGardens.new
       connection :getAllGardens, function: GetAllGardens.new
+      connection :getAllUserGardens, function: GetAllUserGardens.new
     end
   end
 end

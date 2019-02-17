@@ -77,6 +77,11 @@ ActiveRecord::Schema.define(version: 2019_02_17_001916) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "s3_uploads", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
     t.datetime "created_at", null: false
