@@ -1,6 +1,9 @@
 module Types
   class MediumType < Types::BaseObject
     description "User object"
+
+    implements Types::ActiveRecordInterface
+
     field :id, ID, null: false
     field :picture, String, null: false
     field :title, String, null: false
