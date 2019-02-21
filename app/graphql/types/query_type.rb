@@ -10,6 +10,7 @@ module Types
       Types::Query::UserQuery,
       Types::Query::MediumQuery,
       Types::Query::GardenQuery,
+      Types::Query::LunarCycleQuery,
     ])
   end
 end
