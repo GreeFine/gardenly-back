@@ -1,22 +1,22 @@
-class Mutations::CreateGarden < Mutations::BaseMutation
-  argument :name, String, required: true
-  argument :data, String, required: true
+class Mutations::UpdateGarden < Mutations::BaseMutation
+  argument :id, ID, required: true
+  argument :name, String, required: false
+  argument :data, String, required: false
   argument :latitude, String, required: false
   argument :longitude, String, required: false
   argument :country, String, required: false
 
-  field :garden, Types::GardenType, null: false
+  field :garden, Types::GardenType, null: true
   field :errors, [String], null: false
 
   def resolve(arguments)
-    user = context[:current_user]
-    if user.nil?
-      return { errors: "Not connected" }
+    garden = Garden.find(arguments[:id])
+    if arguments[:name].present?
+      garden.name = arguments[:name]
     end
-
-    garden = Garden.new(name: arguments[:name], data: arguments[:data])
-    garden.user = user
-
+    if arguments[:data].present?
+      garden.data = arguments[:data]
+    end
     if arguments[:latitude].present? && arguments[:longitude].present?
       geoCountry = Geocoder.search([arguments[:latitude].to_f, arguments[:longitude].to_f])
       garden.country = geoCountry.first.country
@@ -31,8 +31,8 @@ class Mutations::CreateGarden < Mutations::BaseMutation
       }
     else
       {
-        garden: garden,
-        errors: garden.errors.full_messages
+        garden: nil,
+        errors: session.errors.full_messages
       }
     end
   end
