@@ -5,7 +5,8 @@ module Types
     LunarCycleQuery = GraphQL::ObjectType.define do
       name 'LunarCycleQuery'
 
-      field :getLunarCycle, function: GetLunarCycle.new
+      field :getYearlyLunarCycle, function: GetYearlyLunarCycle.new
+      field :getLunarCycleFromToday, function: GetLunarCycleFromToday.new
     end
   end
 end
