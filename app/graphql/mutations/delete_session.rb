@@ -1,19 +1,15 @@
 class Mutations::DeleteSession < Mutations::BaseMutation
-  field :errors, [String], null: false
+  field :success, Boolean, null: true
 
   def resolve
     session = context[:current_session]
     if session.nil?
-      return { errors: [ "Not connected" ] }
+      return GraphQL::ExecutionError.new("No session")
     end
     context[:cookies].delete :token
-    if session.destroy
+    if session.destroy!
       {
-        errors: []
-      }
-    else
-      {
-        errors: session.errors.full_messages
+        success: true
       }
     end
   end

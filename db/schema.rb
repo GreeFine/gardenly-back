@@ -111,6 +111,11 @@ ActiveRecord::Schema.define(version: 2019_02_23_195852) do
     t.uuid "article_id"
   end
 
+  create_table "s3_uploads", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
     t.datetime "created_at", null: false
@@ -147,9 +152,9 @@ ActiveRecord::Schema.define(version: 2019_02_23_195852) do
     t.datetime "updated_at", null: false
     t.string "password"
     t.string "address"
-    t.string "date_of_birth"
     t.string "phone_number"
     t.string "username"
+    t.string "date_of_birth"
     t.string "last_name"
     t.string "first_name"
   end
