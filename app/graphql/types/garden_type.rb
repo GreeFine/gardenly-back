@@ -4,6 +4,7 @@ module Types
     implements Types::ActiveRecordInterface
     field :id, ID, null: false
     field :name, String, null: false
+    field :items, Integer, null: false
     field :country, String, null: true
     field :data, String, null: false
   end
