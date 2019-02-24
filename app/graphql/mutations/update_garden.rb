@@ -5,6 +5,7 @@ class Mutations::UpdateGarden < Mutations::BaseMutation
   argument :latitude, String, required: false
   argument :longitude, String, required: false
   argument :country, String, required: false
+  argument :items, Integer, required: false
 
   field :garden, Types::GardenType, null: true
   field :errors, [String], null: false
@@ -13,6 +14,9 @@ class Mutations::UpdateGarden < Mutations::BaseMutation
     garden = Garden.find(arguments[:id])
     if arguments[:name].present?
       garden.name = arguments[:name]
+    end
+    if arguments[:items].present?
+      garden.items = arguments[:items]
     end
     if arguments[:data].present?
       garden.data = arguments[:data]
