@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 2019_02_23_195852) do
     t.json "data"
     t.uuid "user_id"
     t.string "name"
+    t.string "country"
   end
 
   create_table "lunar_cycles", force: :cascade do |t|

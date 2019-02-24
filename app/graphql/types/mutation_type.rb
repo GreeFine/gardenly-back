@@ -8,6 +8,7 @@ module Types
     field :create_medium, mutation: Mutations::CreateMedium
     field :delete_medium, mutation: Mutations::DeleteMedium
     field :create_garden, mutation: Mutations::CreateGarden
+    field :update_garden, mutation: Mutations::UpdateGarden
     field :create_article, mutation: Mutations::CreateArticle
     field :create_comment, mutation: Mutations::CreateComment
     field :create_review, mutation: Mutations::CreateReview

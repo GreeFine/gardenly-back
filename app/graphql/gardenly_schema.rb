@@ -21,6 +21,6 @@ GraphQL::Errors.configure(GardenlySchema) do
   end
 
   # rescue_from ::Pundit::NotAuthorizedError do |exception|
-  #   GraphQL::ExecutionError.new(exception.message);
+  #   [GraphQL::ExecutionError.new(exception.message)]
   # end
 end
