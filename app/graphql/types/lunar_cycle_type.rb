@@ -6,6 +6,7 @@ module Types
     field :id, ID, null: false
     field :data, String, null: false
     field :year, Integer, null: false
+    
     def data
       object.data.to_json.to_s
     end
