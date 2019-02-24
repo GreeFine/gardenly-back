@@ -7,4 +7,8 @@ module Types
     field :country, String, null: true
     field :data, String, null: false
   end
+
+  def data
+    object.data.to_json.to_s
+  end
 end
