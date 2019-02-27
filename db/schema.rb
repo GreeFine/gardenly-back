@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_23_195852) do
+ActiveRecord::Schema.define(version: 2019_02_24_233502) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 2019_02_23_195852) do
     t.uuid "user_id"
     t.string "name"
     t.string "country"
+    t.integer "items"
   end
 
   create_table "lunar_cycles", force: :cascade do |t|
@@ -111,6 +112,11 @@ ActiveRecord::Schema.define(version: 2019_02_23_195852) do
     t.uuid "article_id"
   end
 
+  create_table "s3_uploads", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
     t.datetime "created_at", null: false
@@ -147,9 +153,9 @@ ActiveRecord::Schema.define(version: 2019_02_23_195852) do
     t.datetime "updated_at", null: false
     t.string "password"
     t.string "address"
-    t.string "date_of_birth"
     t.string "phone_number"
     t.string "username"
+    t.string "date_of_birth"
     t.string "last_name"
     t.string "first_name"
   end

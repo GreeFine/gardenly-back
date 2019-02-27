@@ -4,6 +4,7 @@ class Mutations::CreateGarden < Mutations::BaseMutation
   argument :latitude, String, required: false
   argument :longitude, String, required: false
   argument :country, String, required: false
+  argument :items, Integer, required: false
 
   field :garden, Types::GardenType, null: false
   field :errors, [String], null: false
@@ -14,7 +15,7 @@ class Mutations::CreateGarden < Mutations::BaseMutation
       return { errors: "Not connected" }
     end
 
-    garden = Garden.new(name: arguments[:name], data: arguments[:data])
+    garden = Garden.new(name: arguments[:name], data: arguments[:data], items: arguments[:items])
     garden.user = user
 
     if arguments[:latitude].present? && arguments[:longitude].present?
