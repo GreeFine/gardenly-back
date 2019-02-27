@@ -14,17 +14,35 @@ class Mutations::UpdateUser < Mutations::BaseMutation
   def resolve(params)
     user = context[:current_user]
     if user.nil?
-      return { errors: [ "Not connected" ] }
+      return GraphQL::ExecutionError.new("User not connected")
     end
-    user.last_name = params[:last_name]
-    user.first_name = params[:first_name]
-    user.username = params[:username]
-    user.password = params[:password]
-    user.age = params[:age]
-    user.email = params[:email]
-    user.address = params[:address]
-    user.date_of_birth = params[:date_of_birth]
-    user.phone_number = params[:phone_number]
+    if params[:last_name]
+      user.last_name = params[:last_name]
+    end
+    if params[:first_name]
+      user.first_name = params[:first_name]
+    end
+    if params[:username]
+      user.username = params[:username]
+    end
+    if params[:password]
+      user.password = params[:password]
+    end
+    if params[:age]
+      user.age = params[:age]
+    end
+    if params[:email]
+      user.email = params[:email]
+    end
+    if params[:address]
+      user.address = params[:address]
+    end
+    if params[:date_of_birth]
+      user.date_of_birth = params[:date_of_birth]
+    end
+    if params[:phone_number]
+      user.phone_number = params[:phone_number]
+    end
 
     if user.save!
       {
