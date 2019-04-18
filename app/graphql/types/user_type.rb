@@ -11,6 +11,7 @@ module Types
     field :address, String, null: true
     field :date_of_birth, String, null: true
     field :phone_number, String, null: true
+    field :rooms, [Types::RoomType], null: true
     field :is_moderator, Boolean, null: false
     field :media, [MediumType], null: false
     field :gardens, [GardenType], null: false
