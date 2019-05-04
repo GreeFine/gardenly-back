@@ -1,0 +1,2 @@
+module TechReportsHelper
+end

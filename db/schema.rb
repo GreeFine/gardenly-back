@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_24_233502) do
+ActiveRecord::Schema.define(version: 2019_05_04_002111) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -80,6 +80,7 @@ ActiveRecord::Schema.define(version: 2019_02_24_233502) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "user_id"
+    t.index ["user_id"], name: "index_moderators_on_user_id"
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -103,6 +104,19 @@ ActiveRecord::Schema.define(version: 2019_02_24_233502) do
     t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "symbol", null: false
+    t.string "scientific_name", null: false
+    t.string "species", null: false
+    t.string "common_name"
+    t.string "location"
+    t.string "category"
+    t.string "family"
+    t.string "duration"
+    t.string "growth_habit"
+    t.string "native_status"
+    t.string "toxicity"
+    t.json "whole_data"
+    t.string "photo"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -110,11 +124,6 @@ ActiveRecord::Schema.define(version: 2019_02_24_233502) do
     t.boolean "vote"
     t.uuid "user_id"
     t.uuid "article_id"
-  end
-
-  create_table "s3_uploads", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -129,6 +138,20 @@ ActiveRecord::Schema.define(version: 2019_02_24_233502) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "user_id"
+  end
+
+  create_table "statistics", force: :cascade do |t|
+    t.integer "users_count"
+    t.integer "media_count"
+    t.integer "gardens_count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tech_reports", force: :cascade do |t|
+    t.string "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "terrains", force: :cascade do |t|
@@ -153,11 +176,12 @@ ActiveRecord::Schema.define(version: 2019_02_24_233502) do
     t.datetime "updated_at", null: false
     t.string "password"
     t.string "address"
+    t.string "date_of_birth"
     t.string "phone_number"
     t.string "username"
-    t.string "date_of_birth"
     t.string "last_name"
     t.string "first_name"
+    t.string "avatar"
   end
 
 end
