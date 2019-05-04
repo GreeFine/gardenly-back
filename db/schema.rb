@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_04_184512) do
+ActiveRecord::Schema.define(version: 2019_05_04_203346) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -54,6 +54,13 @@ ActiveRecord::Schema.define(version: 2019_05_04_184512) do
     t.integer "items"
   end
 
+  create_table "ground_types", force: :cascade do |t|
+    t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "lunar_cycles", force: :cascade do |t|
     t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
     t.json "data", null: false
@@ -91,6 +98,43 @@ ActiveRecord::Schema.define(version: 2019_05_04_184512) do
     t.uuid "user_id"
   end
 
+  create_table "periodicities", force: :cascade do |t|
+    t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "plant_ground_types", force: :cascade do |t|
+    t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
+    t.uuid "plant_id"
+    t.uuid "ground_type_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ground_type_id"], name: "index_plant_ground_types_on_ground_type_id"
+    t.index ["plant_id"], name: "index_plant_ground_types_on_plant_id"
+  end
+
+  create_table "plant_periodicities", force: :cascade do |t|
+    t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
+    t.uuid "plant_id"
+    t.uuid "periodicities_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["periodicities_id"], name: "index_plant_periodicities_on_periodicities_id"
+    t.index ["plant_id"], name: "index_plant_periodicities_on_plant_id"
+  end
+
+  create_table "plant_shapes", force: :cascade do |t|
+    t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
+    t.uuid "plant_id"
+    t.uuid "shape_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["plant_id"], name: "index_plant_shapes_on_plant_id"
+    t.index ["shape_id"], name: "index_plant_shapes_on_shape_id"
+  end
+
   create_table "plant_tiles", force: :cascade do |t|
     t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
     t.datetime "created_at", null: false
@@ -105,6 +149,18 @@ ActiveRecord::Schema.define(version: 2019_05_04_184512) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "photo"
+    t.integer "blossoming_start", default: [], array: true
+    t.integer "blossoming_end", default: [], array: true
+    t.integer "height_low"
+    t.integer "height_high"
+    t.float "ph_range_low"
+    t.float "ph_range_high"
+    t.integer "rusticity"
+    t.integer "water_need"
+    t.integer "sun_need"
+    t.string "color", default: [], array: true
+    t.uuid "type_id"
+    t.index ["type_id"], name: "index_plants_on_type_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -126,6 +182,13 @@ ActiveRecord::Schema.define(version: 2019_05_04_184512) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "user_id"
+  end
+
+  create_table "shapes", force: :cascade do |t|
+    t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "statistics", force: :cascade do |t|
@@ -154,6 +217,13 @@ ActiveRecord::Schema.define(version: 2019_05_04_184512) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "garden_id"
+  end
+
+  create_table "types", force: :cascade do |t|
+    t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

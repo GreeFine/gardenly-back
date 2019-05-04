@@ -13,6 +13,7 @@ module Types
     field :phone_number, String, null: true
     field :is_moderator, Boolean, null: false
     field :media, [MediumType], null: false
+    field :gardens, [GardenType], null: false
 
 
     def avatar
