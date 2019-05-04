@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_04_203346) do
+ActiveRecord::Schema.define(version: 2019_05_04_232115) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -118,10 +118,10 @@ ActiveRecord::Schema.define(version: 2019_05_04_203346) do
   create_table "plant_periodicities", force: :cascade do |t|
     t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
     t.uuid "plant_id"
-    t.uuid "periodicities_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["periodicities_id"], name: "index_plant_periodicities_on_periodicities_id"
+    t.uuid "periodicity_id"
+    t.index ["periodicity_id"], name: "index_plant_periodicities_on_periodicity_id"
     t.index ["plant_id"], name: "index_plant_periodicities_on_plant_id"
   end
 
