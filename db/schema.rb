@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_04_002111) do
+ActiveRecord::Schema.define(version: 2019_05_04_184512) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -104,18 +104,6 @@ ActiveRecord::Schema.define(version: 2019_05_04_002111) do
     t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "symbol", null: false
-    t.string "scientific_name", null: false
-    t.string "species", null: false
-    t.string "common_name"
-    t.string "location"
-    t.string "category"
-    t.string "family"
-    t.string "duration"
-    t.string "growth_habit"
-    t.string "native_status"
-    t.string "toxicity"
-    t.json "whole_data"
     t.string "photo"
   end
 

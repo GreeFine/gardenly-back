@@ -4,6 +4,7 @@ module Types
     field :id, ID, null: false
     field :username, String, null: false
     field :first_name, String, null: false
+    field :avatar, String, null: true
     field :last_name, String, null: false
     field :email, String, null: false
     field :age, Integer, null: true
@@ -11,6 +12,12 @@ module Types
     field :date_of_birth, String, null: true
     field :phone_number, String, null: true
     field :is_moderator, Boolean, null: false
+    field :media, [MediumType], null: false
+
+
+    def avatar
+      object.avatar_url
+    end
 
     def is_moderator
       object.moderator.present?
