@@ -12,15 +12,8 @@ class Mutations::UpdateGarden < Mutations::BaseMutation
 
   def resolve(arguments)
     garden = Garden.find(arguments[:id])
-    if arguments[:name].present?
-      garden.name = arguments[:name]
-    end
-    if arguments[:items].present?
-      garden.items = arguments[:items]
-    end
-    if arguments[:data].present?
-      garden.data = arguments[:data]
-    end
+    garden.assign_attributes(arguments.except(:latitude, :longitude, :country))
+
     if arguments[:latitude].present? && arguments[:longitude].present?
       geoCountry = Geocoder.search([arguments[:latitude].to_f, arguments[:longitude].to_f])
       garden.country = geoCountry.first.country

@@ -1,0 +1,2 @@
+class TechReport < ApplicationRecord
+end

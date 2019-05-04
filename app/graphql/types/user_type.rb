@@ -10,5 +10,10 @@ module Types
     field :address, String, null: true
     field :date_of_birth, String, null: true
     field :phone_number, String, null: true
+    field :is_moderator, Boolean, null: false
+
+    def is_moderator
+      object.moderator.present?
+    end
   end
 end
