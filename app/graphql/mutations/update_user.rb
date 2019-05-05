@@ -16,33 +16,7 @@ class Mutations::UpdateUser < Mutations::BaseMutation
     if user.nil?
       return GraphQL::ExecutionError.new("User not connected")
     end
-    if params[:last_name]
-      user.last_name = params[:last_name]
-    end
-    if params[:first_name]
-      user.first_name = params[:first_name]
-    end
-    if params[:username]
-      user.username = params[:username]
-    end
-    if params[:password]
-      user.password = params[:password]
-    end
-    if params[:age]
-      user.age = params[:age]
-    end
-    if params[:email]
-      user.email = params[:email]
-    end
-    if params[:address]
-      user.address = params[:address]
-    end
-    if params[:date_of_birth]
-      user.date_of_birth = params[:date_of_birth]
-    end
-    if params[:phone_number]
-      user.phone_number = params[:phone_number]
-    end
+    user.assign_attributes(params)
 
     if user.save!
       {
