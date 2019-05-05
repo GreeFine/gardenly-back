@@ -69,7 +69,7 @@ namespace :plants do
         plant = Plant.create!(
           name: e[:name],
           height_low: e[:height_low],
-          height_low: e[:height_high],
+          height_high: e[:height_high],
           blossoming_start: e[:blossoming_start],
           blossoming_end: e[:blossoming_end],
           type_id: e[:type],
