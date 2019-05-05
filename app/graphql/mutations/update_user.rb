@@ -13,9 +13,8 @@ class Mutations::UpdateUser < Mutations::BaseMutation
 
   def resolve(params)
     user = context[:current_user]
-    if user.nil?
-      return GraphQL::ExecutionError.new("User not connected")
-    end
+    return GraphQL::ExecutionError.new('User not connected') if user.nil?
+
     user.assign_attributes(params)
 
     if user.save!

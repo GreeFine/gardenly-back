@@ -35,11 +35,11 @@ module Resolvers
       end
 
       class GetAllUserRooms < GraphQL::Function
-        description 'Get all User Rooms' #  FIXME: Same as above, supode to be users
+        description 'Get all User Rooms'
         type Types::RoomType.connection_type
 
         def call(_obj, _args, ctx)
-          return { errors: 'Not logged' } if ctx[:current_user].nil?
+          return GraphQL::ExecutionError.new('User not connected') if ctx[:current_user].nil?
 
           ctx[:current_user].rooms
         end

@@ -32,6 +32,17 @@ module Resolvers
         end
       end
 
+      class GetAllUserGardens < GraphQL::Function
+        description 'Get all Gardens'
+        type Types::GardenType.connection_type
+
+        def call(obj, args, ctx)
+          return GraphQL::ExecutionError.new('User not connected') if ctx[:current_user].nil?
+
+          ctx[:current_user].gardens
+        end
+      end
+
     end
   end
 end
