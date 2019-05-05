@@ -82,6 +82,15 @@ ActiveRecord::Schema.define(version: 2019_05_04_232115) do
     t.string "picture"
   end
 
+  create_table "messages", force: :cascade do |t|
+    t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
+    t.uuid "user_id"
+    t.uuid "room_id"
+    t.string "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "moderators", force: :cascade do |t|
     t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
     t.datetime "created_at", null: false

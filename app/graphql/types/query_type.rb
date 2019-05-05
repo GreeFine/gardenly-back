@@ -12,6 +12,7 @@ module Types
       Types::Query::GardenQuery,
       Types::Query::ArticleQuery,
       Types::Query::LunarCycleQuery,
+      Types::Query::RoomQuery,
     ])
   end
 end

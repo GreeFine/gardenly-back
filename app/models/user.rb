@@ -10,4 +10,5 @@ class User < ApplicationRecord
   has_many :sessions
   has_many :media, dependent: :destroy
   has_many :gardens, dependent: :destroy
+  has_and_belongs_to_many :rooms
 end

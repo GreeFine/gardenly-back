@@ -12,5 +12,7 @@ module Types
     field :create_article, mutation: Mutations::CreateArticle
     field :create_comment, mutation: Mutations::CreateComment
     field :create_review, mutation: Mutations::CreateReview
+    field :create_room, mutation: Mutations::CreateRoom
+    field :create_message, mutation: Mutations::CreateMessage
   end
 end
