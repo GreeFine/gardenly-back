@@ -8,5 +8,6 @@ class User < ApplicationRecord
 
   has_one :moderator
   has_many :sessions
-  has_many :gardens
+  has_many :media, dependent: :destroy
+  has_many :gardens, dependent: :destroy
 end
