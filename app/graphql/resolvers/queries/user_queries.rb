@@ -7,7 +7,7 @@ module Resolvers
 
         argument :id, !types.ID
 
-        def call(obj, args, ctx)
+        def call(_obj, args, _ctx)
           User.find(args[:id])
         end
       end
@@ -18,7 +18,7 @@ module Resolvers
 
         argument :ids, !types[types.ID]
 
-        def call(obj, args, ctx)
+        def call(_obj, args, _ctx)
           User.find(args[:ids])
         end
       end
@@ -27,7 +27,7 @@ module Resolvers
         description 'Get all Users'
         type Types::UserType.connection_type
 
-        def call(obj, args, ctx)
+        def call(_obj, _args, _ctx)
           User.all
         end
       end
@@ -36,10 +36,9 @@ module Resolvers
         description 'Get the current user'
         type Types::UserType
 
-        def call(obj, args, ctx)
-          if ctx[:current_user].nil?
-            return { errors: "Not logged" } # How To do this proprely ?
-          end
+        def call(_obj, _args, ctx)
+          return GraphQL::ExecutionError.new('User not connected') if ctx[:current_user].nil?
+
           ctx[:current_user]
         end
       end

@@ -7,7 +7,7 @@ module Resolvers
 
         argument :id, !types.ID
 
-        def call(obj, args, ctx)
+        def call(_obj, args, _ctx)
           Article.find(args[:id])
         end
       end
@@ -18,7 +18,7 @@ module Resolvers
 
         argument :ids, !types[types.ID]
 
-        def call(obj, args, ctx)
+        def call(_obj, args, _ctx)
           Article.find(args[:ids])
         end
       end
@@ -27,20 +27,21 @@ module Resolvers
         description 'Get all Articles'
         type Types::ArticleType.connection_type
 
-        def call(obj, args, ctx)
+        def call(_obj, _args, _ctx)
           Article.all
         end
       end
 
       class GetAllUserArticles < GraphQL::Function
-        description 'Get all User Articles' #  FIXME: Same as above, supode to be users
+        description 'Get all User Articles'
         type Types::ArticleType.connection_type
 
-        def call(obj, args, ctx)
-          Article.all
+        def call(_obj, _args, ctx)
+          return GraphQL::ExecutionError.new('User not connected') if ctx[:current_user].nil?
+
+          ctx[:current_user].articles
         end
       end
-
     end
   end
 end
