@@ -24,25 +24,25 @@ module Resolvers
       end
 
       class GetAllPlants < GraphQL::Function
-        description 'Get all Plants.
-          Args:
-            name: String
-            filter: {
-              shapeIds: [ID],
-              groundTypeIds: [ID],
-              periodicityIds: [ID],
-              typeId: ID,
-              phLow: Float, //NEED MORE TESTS
-              phHigh: Float, //NEED MORE TESTS
-              rusticityLow: Integer,
-              rusticityHigh: Integer,
-              waterNeedLow: Integer,
-              waterNeedHigh: Integer,
-              sunNeedLow: Integer,
-              sunNeedHigh: Integer,
-              blossomingLow: Integer, //NOT IMPLEMENTED
-              blossomingHigh: Integer, //NOT IMPLEMENTED
-              color: [String], //NOT IMPLEMENTED
+        description 'Get all Plants.\
+          Args:\
+            name: String\
+            filter: {\
+              shapeIds: [ID],\
+              groundTypeIds: [ID],\
+              periodicityIds: [ID],\
+              typeId: ID,\
+              phLow: Float, //NEED MORE TESTS\
+              phHigh: Float, //NEED MORE TESTS\
+              rusticityLow: Integer,\
+              rusticityHigh: Integer,\
+              waterNeedLow: Integer,\
+              waterNeedHigh: Integer,\
+              sunNeedLow: Integer,\
+              sunNeedHigh: Integer,\
+              blossomingLow: Integer, //NOT IMPLEMENTED\
+              blossomingHigh: Integer, //NOT IMPLEMENTED\
+              color: [String], //NOT IMPLEMENTED\
             }
           '
         type Types::PlantType.connection_type

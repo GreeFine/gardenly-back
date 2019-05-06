@@ -8,6 +8,7 @@ module Types
       field :getShapes, function: GetShapes.new
       field :getGroundTypes, function: GetGroundTypes.new
       field :getTypes, function: GetTypes.new
+      field :getColors, function: GetColors.new
       field :getPeriodicities, function: GetPeriodicities.new
 
     end

@@ -42,7 +42,7 @@ module Resolvers
         type types[types.String]
 
         def call(_obj, _args, _ctx)
-          Plant.all.pluck(:color).flatter.uniq
+          Plant.all.pluck(:color).flatten.uniq
         end
       end
     end
