@@ -13,6 +13,7 @@ module Types
       Types::Query::ArticleQuery,
       Types::Query::LunarCycleQuery,
       Types::Query::RoomQuery,
+      Types::Query::PlantFieldQuery
     ])
   end
 end
