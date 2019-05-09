@@ -86,11 +86,11 @@ namespace :plants do
         begin
           plant.remote_photo_url = e[:photo_url]
         rescue
-          TechReport.create!(body: "PLANT MEDIA:: #{e[:name]} -- #{e[:photo_url]}")
+          TechReport.create!(kind: "exception", body: "PLANT MEDIA:: #{e[:name]} -- #{e[:photo_url]}")
         end
         plant.save!
       rescue
-        TechReport.create!(body: "PLANT CREATE:: #{e[:name]}")
+        TechReport.create!(kind: "exception", body: "PLANT CREATE:: #{e[:name]}")
       end
     end
 
