@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_04_232115) do
+ActiveRecord::Schema.define(version: 2019_05_09_044933) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -220,6 +220,23 @@ ActiveRecord::Schema.define(version: 2019_05_04_232115) do
     t.integer "gardens_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
+    t.uuid "garden_id"
+    t.uuid "plant_tile_id"
+    t.string "status", default: "New"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.string "body"
+    t.boolean "public", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "user_id"
+    t.index ["garden_id"], name: "index_tasks_on_garden_id"
+    t.index ["plant_tile_id"], name: "index_tasks_on_plant_tile_id"
+    t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
   create_table "tech_reports", force: :cascade do |t|
