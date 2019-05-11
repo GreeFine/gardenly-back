@@ -1,6 +1,10 @@
+# frozen_string_literal: true
+
 class GardenlySchema < GraphQL::Schema
+  use GraphQL::Subscriptions::ActionCableSubscriptions, redis: Redis.new
   mutation(Types::MutationType)
   query(Types::QueryType)
+  subscription(Types::SubscriptionType)
 end
 
 GraphQL::Errors.configure(GardenlySchema) do
@@ -13,7 +17,7 @@ GraphQL::Errors.configure(GardenlySchema) do
   end
 
   rescue_from ActiveRecord::StatementInvalid do |exception|
-    [GraphQL::ExecutionError.new(/ERROR:*(.*)/.match(exception.message)[0].remove("ERROR:  ").capitalize)]
+    [GraphQL::ExecutionError.new(/ERROR:*(.*)/.match(exception.message)[0].remove('ERROR:  ').capitalize)]
   end
 
   rescue_from ActiveModel::RangeError do |exception|
