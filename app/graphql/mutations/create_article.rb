@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::CreateArticle < Mutations::BaseMutation
   argument :title, String, required: true
   argument :content, String, required: true
@@ -11,7 +13,7 @@ class Mutations::CreateArticle < Mutations::BaseMutation
 
     if article.save!
       {
-        article: article,
+        article: article
       }
     end
   end
