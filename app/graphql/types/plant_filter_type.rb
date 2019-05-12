@@ -16,6 +16,6 @@ module Types
     argument :sunNeedHigh, Integer, required: false
     argument :blossomingLow, Integer, required: false
     argument :blossomingHigh, Integer, required: false
-    argument :color, [String], required: false
+    argument :colorIds, [ID], required: false
   end
 end

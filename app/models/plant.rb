@@ -5,6 +5,9 @@ class Plant < ApplicationRecord
 
   belongs_to :type
 
+  has_many :plant_colors, dependent: :destroy
+  has_many :colors, through: :plant_colors
+
   has_many :plant_tiles, dependent: :destroy
   has_many :tiles, through: :plant_tiles
 

@@ -39,10 +39,10 @@ module Resolvers
 
       class GetColors < GraphQL::Function
         description 'Get all plant colors'
-        type types[types.String]
+        type types[Types::ColorType]
 
         def call(_obj, _args, _ctx)
-          Plant.all.pluck(:color).flatten.uniq
+          Color.all
         end
       end
     end
