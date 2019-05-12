@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_04_232115) do
+ActiveRecord::Schema.define(version: 2019_05_12_042207) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -24,6 +24,13 @@ ActiveRecord::Schema.define(version: 2019_05_04_232115) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "user_id"
+  end
+
+  create_table "colors", force: :cascade do |t|
+    t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "comments", force: :cascade do |t|
@@ -114,6 +121,16 @@ ActiveRecord::Schema.define(version: 2019_05_04_232115) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "plant_colors", force: :cascade do |t|
+    t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
+    t.uuid "plant_id"
+    t.uuid "color_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["color_id"], name: "index_plant_colors_on_color_id"
+    t.index ["plant_id"], name: "index_plant_colors_on_plant_id"
+  end
+
   create_table "plant_ground_types", force: :cascade do |t|
     t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
     t.uuid "plant_id"
@@ -167,7 +184,6 @@ ActiveRecord::Schema.define(version: 2019_05_04_232115) do
     t.integer "rusticity"
     t.integer "water_need"
     t.integer "sun_need"
-    t.string "color", default: [], array: true
     t.uuid "type_id"
     t.index ["type_id"], name: "index_plants_on_type_id"
   end
@@ -220,6 +236,23 @@ ActiveRecord::Schema.define(version: 2019_05_04_232115) do
     t.integer "gardens_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
+    t.uuid "garden_id"
+    t.uuid "plant_tile_id"
+    t.string "status", default: "New"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.string "body"
+    t.boolean "public", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "user_id"
+    t.index ["garden_id"], name: "index_tasks_on_garden_id"
+    t.index ["plant_tile_id"], name: "index_tasks_on_plant_tile_id"
+    t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
   create_table "tech_reports", force: :cascade do |t|

@@ -15,7 +15,7 @@ module Types
     field :sun_need, Integer, null: true
     field :ph_range_low, Float, null: true
     field :ph_range_high, Float, null: true
-    field :color, [String], null: false
+    field :colors, [ColorType], null: false
     field :type, TypeType, null: false
     field :periodicities, [PeriodicityType], null: false
     field :shapes, [ShapeType], null: false

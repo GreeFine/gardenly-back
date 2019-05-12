@@ -7,6 +7,7 @@ class User < ApplicationRecord
   mount_base64_uploader :avatar, AvatarUploader
 
   has_one :moderator
+  has_many :tasks
   has_many :sessions
   has_many :articles
   has_many :media, dependent: :destroy

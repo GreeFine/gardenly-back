@@ -31,7 +31,7 @@ module Resolvers
               shapeIds: [ID],\
               groundTypeIds: [ID],\
               periodicityIds: [ID],\
-              typeId: ID,\
+              typeIds: [ID],\
               phLow: Float, //NEED MORE TESTS\
               phHigh: Float, //NEED MORE TESTS\
               rusticityLow: Integer,\
@@ -42,7 +42,7 @@ module Resolvers
               sunNeedHigh: Integer,\
               blossomingLow: Integer, //NOT IMPLEMENTED\
               blossomingHigh: Integer, //NOT IMPLEMENTED\
-              color: [String], //NOT IMPLEMENTED\
+              colorIds: [ID],
             }
           '
         type Types::PlantType.connection_type
@@ -54,11 +54,11 @@ module Resolvers
           plants = Plant.where("plants.name ilike ?", "%#{args[:name]}%")
           filters = args[:filters]
 
-          if filters[:typeId].present?
-            plants = plants.where(type_id: filters[:typeId])
+          if filters[:typeIds].present?
+            plants = plants.where("plants.type_id IN (?)", filters[:typeIds])
           end
           if filters[:phLow].present? && filters[:phHigh].present?
-            plants = plants.where("plants.ph_range_low < ? AND plants.ph_range_high > ?", filters[:phLow], filters[:phHigh])
+            plants = plants.where("plants.ph_range_low > ? AND plants.ph_range_high < ?", filters[:phLow], filters[:phHigh])
           end
           if filters[:rusticityLow].present? && filters[:rusticityHigh].present?
             plants = plants.where("plants.rusticity > ? AND plants.rusticity < ?", filters[:rusticityLow], filters[:rusticityHigh])
@@ -80,15 +80,16 @@ module Resolvers
           if filters[:groundTypeIds].present?
             plants = plants.joins(:ground_types)
               .where(ground_types: {uuid: filters[:groundTypeIds]})
-              .group("plants.id")
-              .having('count(plants.id) >= ?', filters[:groundTypeIds].size)
           end
 
           if filters[:periodicityIds].present?
             plants = plants.joins(:periodicities)
               .where(periodicities: {uuid: filters[:periodicityIds]})
-              .group("plants.id")
-              .having('count(plants.id) >= ?', filters[:periodicityIds].size)
+          end
+
+          if filters[:colorIds].present?
+            plants = plants.joins(:colors)
+              .where(colors: {uuid: filters[:colorIds]})
           end
 
           plants.order(:name)
