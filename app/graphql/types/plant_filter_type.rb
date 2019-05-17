@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 module Types
   class PlantFilterType < Types::BaseInputObject
-    description "Plant Filters object for GetAllPlants query"
+    description 'Plant Filters object for GetAllPlants query'
 
     argument :shapeIds, [ID], required: false
     argument :groundTypeIds, [ID], required: false
     argument :periodicityIds, [ID], required: false
-    argument :typeId, ID, required: false
+    argument :typeIds, [ID], required: false
     argument :phLow, Float, required: false
     argument :phHigh, Float, required: false
     argument :rusticityLow, Integer, required: false
