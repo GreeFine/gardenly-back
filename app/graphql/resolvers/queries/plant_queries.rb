@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Resolvers
   module Queries
     module PlantQueries
@@ -7,7 +9,7 @@ module Resolvers
 
         argument :id, !types.ID
 
-        def call(obj, args, ctx)
+        def call(_obj, args, _ctx)
           Plant.find(args[:id])
         end
       end
@@ -18,7 +20,7 @@ module Resolvers
 
         argument :ids, !types[types.ID]
 
-        def call(obj, args, ctx)
+        def call(_obj, args, _ctx)
           Plant.find(args[:ids])
         end
       end
@@ -50,46 +52,46 @@ module Resolvers
         argument :name, !types.String
         argument :filters, Types::PlantFilterType
 
-        def call(obj, args, ctx)
-          plants = Plant.where("plants.name ilike ?", "%#{args[:name]}%")
+        def call(_obj, args, _ctx)
+          plants = Plant.where('plants.name ilike ?', "%#{args[:name]}%")
           filters = args[:filters]
 
           if filters[:typeIds].present?
-            plants = plants.where("plants.type_id IN (?)", filters[:typeIds])
+            plants = plants.where('plants.type_id IN (?)', filters[:typeIds])
           end
           if filters[:phLow].present? && filters[:phHigh].present?
-            plants = plants.where("plants.ph_range_low > ? AND plants.ph_range_high < ?", filters[:phLow], filters[:phHigh])
+            plants = plants.where('plants.ph_range_low > ? AND plants.ph_range_high < ?', filters[:phLow], filters[:phHigh])
           end
           if filters[:rusticityLow].present? && filters[:rusticityHigh].present?
-            plants = plants.where("plants.rusticity > ? AND plants.rusticity < ?", filters[:rusticityLow], filters[:rusticityHigh])
+            plants = plants.where('plants.rusticity > ? AND plants.rusticity < ?', filters[:rusticityLow], filters[:rusticityHigh])
           end
           if filters[:waterNeedLow].present? && filters[:waterNeedHigh].present?
-            plants = plants.where("plants.water_need > ? AND plants.water_need < ?", filters[:waterNeedLow], filters[:waterNeedHigh])
+            plants = plants.where('plants.water_need > ? AND plants.water_need < ?', filters[:waterNeedLow], filters[:waterNeedHigh])
           end
           if filters[:sunNeedLow].present? && filters[:sunNeedHigh].present?
-            .where("plants.sun_need > ? AND plants.sun_need < ?", filters[:sunNeedLow], filters[:sunNeedHigh])
+                                                                   .where('plants.sun_need > ? AND plants.sun_need < ?', filters[:sunNeedLow], filters[:sunNeedHigh])
           end
 
           if filters[:shapeIds].present?
             plants = plants.joins(:shapes)
-              .where(shapes: {uuid: filters[:shapesIds]})
-              .group("plants.id")
-              .having('count(plants.id) >= ?', filters[:shapesIds].size)
+                           .where(shapes: { uuid: filters[:shapeIds] })
+                           .group('plants.id')
+                           .having('count(plants.id) >= ?', filters[:shapeIds].size)
           end
 
           if filters[:groundTypeIds].present?
             plants = plants.joins(:ground_types)
-              .where(ground_types: {uuid: filters[:groundTypeIds]})
+                           .where(ground_types: { uuid: filters[:groundTypeIds] })
           end
 
           if filters[:periodicityIds].present?
             plants = plants.joins(:periodicities)
-              .where(periodicities: {uuid: filters[:periodicityIds]})
+                           .where(periodicities: { uuid: filters[:periodicityIds] })
           end
 
           if filters[:colorIds].present?
             plants = plants.joins(:colors)
-              .where(colors: {uuid: filters[:colorIds]})
+                           .where(colors: { uuid: filters[:colorIds] })
           end
 
           plants.order(:name)
