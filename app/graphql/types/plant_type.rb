@@ -13,6 +13,9 @@ module Types
     field :rusticity, Integer, null: true
     field :water_need, Integer, null: true
     field :sun_need, Integer, null: true
+    field :model, Integer, null: true
+    field :description, String, null: true
+    field :tips, String, null: true
     field :ph_range_low, Float, null: true
     field :ph_range_high, Float, null: true
     field :colors, [ColorType], null: false

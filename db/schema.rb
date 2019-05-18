@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_12_042207) do
+ActiveRecord::Schema.define(version: 2019_05_18_210432) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -185,6 +185,9 @@ ActiveRecord::Schema.define(version: 2019_05_12_042207) do
     t.integer "water_need"
     t.integer "sun_need"
     t.uuid "type_id"
+    t.string "description"
+    t.string "tips"
+    t.integer "model"
     t.index ["type_id"], name: "index_plants_on_type_id"
   end
 
