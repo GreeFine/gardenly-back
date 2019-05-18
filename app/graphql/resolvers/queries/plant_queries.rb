@@ -49,12 +49,12 @@ module Resolvers
           '
         type Types::PlantType.connection_type
 
-        argument :name, !types.String
+        argument :name, types.String
         argument :filters, Types::PlantFilterType
 
         def call(_obj, args, _ctx)
           plants = Plant.where('plants.name ilike ?', "%#{args[:name]}%")
-          filters = args[:filters]
+          filters = args[:filters] || {}
 
           if filters[:typeIds].present?
             plants = plants.where('plants.type_id IN (?)', filters[:typeIds])

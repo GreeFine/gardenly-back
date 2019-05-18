@@ -62,6 +62,9 @@ namespace :plants do
       plants[i][:periodicities] = periodicities
 
       plants[i][:photo_url] = row[13]
+      plants[i][:description] = row[14]
+      plants[i][:tips] = row[15]
+      plants[i][:model] = row[16].to_i
 
       i = i + 1
     end
@@ -86,12 +89,15 @@ namespace :plants do
           sun_need: e[:sun_need],
           color_ids: e[:colors],
           periodicity_ids: e[:periodicities],
+          model: e[:model],
+          description: e[:description],
+          tips: e[:tips]
         )
-        begin
-          plant.remote_photo_url = e[:photo_url]
-        rescue => error
-          TechReport.create!(body: "PLANT MEDIA:: #{e[:name]} -- #{e[:photo_url]} -- #{error}")
-        end
+        # begin
+        #   plant.remote_photo_url = e[:photo_url]
+        # rescue => error
+        #   TechReport.create!(body: "PLANT MEDIA:: #{e[:name]} -- #{e[:photo_url]} -- #{error}")
+        # end
         plant.save!
       rescue => error
         TechReport.create!(body: "PLANT CREATE:: #{e[:name]} -- #{error}")
