@@ -49,7 +49,11 @@ namespace :plants do
       plants[i][:water_need] = row[9].to_i
       plants[i][:sun_need] = row[10].to_i
 
-      plants[i][:color] = row[11].split(", ")
+      colors = []
+      row[11].split(", ").each do |e|
+        colors << Color.find_or_create_by(name: e).uuid
+      end
+      plants[i][:colors] = colors
 
       periodicities = []
       row[12].split(", ").each do |e|
@@ -80,17 +84,17 @@ namespace :plants do
           rusticity: e[:rusticity],
           water_need: e[:water_need],
           sun_need: e[:sun_need],
-          color: e[:color],
+          color_ids: e[:colors],
           periodicity_ids: e[:periodicities],
         )
         begin
           plant.remote_photo_url = e[:photo_url]
-        rescue
-          TechReport.create!(body: "PLANT MEDIA:: #{e[:name]} -- #{e[:photo_url]}")
+        rescue => error
+          TechReport.create!(body: "PLANT MEDIA:: #{e[:name]} -- #{e[:photo_url]} -- #{error}")
         end
         plant.save!
-      rescue
-        TechReport.create!(body: "PLANT CREATE:: #{e[:name]}")
+      rescue => error
+        TechReport.create!(body: "PLANT CREATE:: #{e[:name]} -- #{error}")
       end
     end
 

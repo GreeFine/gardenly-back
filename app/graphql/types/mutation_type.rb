@@ -14,5 +14,6 @@ module Types
     field :create_review, mutation: Mutations::CreateReview
     field :create_room, mutation: Mutations::CreateRoom
     field :create_message, mutation: Mutations::CreateMessage
+    field :complete_task, mutation: Mutations::CompleteTask
   end
 end
