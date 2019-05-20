@@ -33,3 +33,6 @@ yarn-debug.log*
 
 # Ignore application configuration
 /config/application.yml
+
+# Ignore temporary uploaded media
+/public/uploads/tmp

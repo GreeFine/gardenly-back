@@ -15,7 +15,7 @@ class Mutations::CreateSession < Mutations::BaseMutation
     session = Session.create(user: user)
 
     # TODO: Cookie and session should be destroyed in time (1week)
-    context[:cookies].signed[:token] = { value: session.uuid, httponly: true, domain: 'localhost' }
+    context[:cookies].signed[:token] = { value: session.uuid, httponly: true }
     {
       expires: (Time.now + 1.week).strftime('%h/%d/%m/%Y')
     }
