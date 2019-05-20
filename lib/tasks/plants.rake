@@ -93,11 +93,11 @@ namespace :plants do
           description: e[:description],
           tips: e[:tips]
         )
-        # begin
-        #   plant.remote_photo_url = e[:photo_url]
-        # rescue => error
-        #   TechReport.create!(body: "PLANT MEDIA:: #{e[:name]} -- #{e[:photo_url]} -- #{error}")
-        # end
+        begin
+          plant.remote_photo_url = e[:photo_url]
+        rescue => error
+          TechReport.create!(body: "PLANT MEDIA:: #{e[:name]} -- #{e[:photo_url]} -- #{error}")
+        end
         plant.save!
       rescue => error
         TechReport.create!(body: "PLANT CREATE:: #{e[:name]} -- #{error}")
