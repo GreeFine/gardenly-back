@@ -18,7 +18,7 @@ class Mutations::CreateUser < Mutations::BaseMutation
     user = User.new(params)
 
     # FIXME: Change public room for friends rooms
-    publicroom = Room.find('d69ab13a-1731-4d2b-9b62-246d8c4e463e')
+    publicroom = Room.first;
     user.rooms << publicroom
 
     user.save!
