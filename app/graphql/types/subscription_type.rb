@@ -2,8 +2,8 @@
 
 module Types
   class SubscriptionType < Types::BaseObject
-    field :on_article, Types::MessageType, null: true, description: 'A new article was sent'
+    field :chat_subscription, Types::MessageType, null: true, description: 'A new message was sent'
 
-    def on_article; end
+    def chat_subscription; end
   end
 end
