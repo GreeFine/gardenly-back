@@ -7,7 +7,6 @@ class Mutations::CreateGarden < Mutations::BaseMutation
   argument :items, Integer, required: false
 
   field :garden, Types::GardenType, null: false
-  field :errors, [String], null: false
 
   def resolve(arguments)
     user = context[:current_user]
@@ -25,16 +24,10 @@ class Mutations::CreateGarden < Mutations::BaseMutation
       garden.country = arguments[:country]
     end
 
-    if garden.save
-      {
-        garden: garden,
-        errors: [],
-      }
-    else
-      {
-        garden: garden,
-        errors: garden.errors.full_messages
-      }
-    end
+    garden.save!
+    {
+      garden: garden,
+      errors: [],
+    }
   end
 end

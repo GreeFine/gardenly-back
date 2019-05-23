@@ -8,7 +8,6 @@ class Mutations::UpdateGarden < Mutations::BaseMutation
   argument :items, Integer, required: false
 
   field :garden, Types::GardenType, null: true
-  field :errors, [String], null: false
 
   def resolve(arguments)
     garden = Garden.find(arguments[:id])
@@ -21,16 +20,9 @@ class Mutations::UpdateGarden < Mutations::BaseMutation
       garden.country = arguments[:country]
     end
 
-    if garden.save
-      {
-        garden: garden,
-        errors: [],
-      }
-    else
-      {
-        garden: nil,
-        errors: session.errors.full_messages
-      }
-    end
+    garden.save!
+    {
+      garden: garden
+    }
   end
 end

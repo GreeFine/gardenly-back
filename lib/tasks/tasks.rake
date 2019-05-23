@@ -9,9 +9,15 @@ namespace :tasks do
     end
   end
 
-  task :publish => :environment do
-    Task.where(status: "New").where("start_date < ?", Time.now.month + 1).each do |t|
-      t.update(public: true)
+  task :publish, [:post_create] => :environment do |t, args|
+    if args[:post_create]
+      Task.where(status: "New", public: false).each do |t|
+        t.update(public: true)
+      end
+    else
+      Task.where(status: "New").where("start_date < ?", Time.now.month + 1).each do |t|
+        t.update(public: true)
+      end
     end
   end
 end

@@ -17,10 +17,9 @@ class Mutations::UpdateUser < Mutations::BaseMutation
 
     user.assign_attributes(params)
 
-    if user.save!
-      {
-        user: user
-      }
-    end
+    user.save!
+    {
+      user: user
+    }
   end
 end
