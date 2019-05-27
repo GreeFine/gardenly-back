@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   self.primary_key = :uuid
 
@@ -13,4 +15,10 @@ class User < ApplicationRecord
   has_many :media, dependent: :destroy
   has_many :gardens, dependent: :destroy
   has_and_belongs_to_many :rooms
+
+  has_and_belongs_to_many :friendships,
+                          class_name: 'User',
+                          join_table: :friendships,
+                          foreign_key: :user_id,
+                          association_foreign_key: :friend_user_id
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_18_210432) do
+ActiveRecord::Schema.define(version: 2019_05_27_025854) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -40,6 +40,13 @@ ActiveRecord::Schema.define(version: 2019_05_18_210432) do
     t.datetime "updated_at", null: false
     t.uuid "user_id"
     t.uuid "article_id"
+  end
+
+  create_table "friendships", id: false, force: :cascade do |t|
+    t.uuid "user_id"
+    t.uuid "friend_user_id"
+    t.index ["friend_user_id", "user_id"], name: "index_friendships_on_friend_user_id_and_user_id", unique: true
+    t.index ["user_id", "friend_user_id"], name: "index_friendships_on_user_id_and_friend_user_id", unique: true
   end
 
   create_table "garden_users", force: :cascade do |t|
