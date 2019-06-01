@@ -18,6 +18,7 @@ module Types
     field :rooms, [RoomType], null: false
     field :media, [MediumType], null: false
     field :gardens, [GardenType], null: false
+    field :friendships, [UserType], null: false
 
     def avatar
       object.avatar_url
