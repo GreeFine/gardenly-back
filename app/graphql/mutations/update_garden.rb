@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::UpdateGarden < Mutations::BaseMutation
   argument :id, ID, required: true
   argument :name, String, required: false
@@ -8,10 +10,12 @@ class Mutations::UpdateGarden < Mutations::BaseMutation
   argument :items, Integer, required: false
 
   field :garden, Types::GardenType, null: true
-  field :errors, [String], null: false
 
   def resolve(arguments)
-    garden = Garden.find(arguments[:id])
+    user = context[:current_user]
+    return GraphQL::ExecutionError.new('User not connected') if user.nil?
+
+    garden = Garden.find(arguments[:id]) # FIXME: Maybe check if it's his garden ???
     garden.assign_attributes(arguments.except(:latitude, :longitude, :country))
 
     if arguments[:latitude].present? && arguments[:longitude].present?
@@ -21,15 +25,9 @@ class Mutations::UpdateGarden < Mutations::BaseMutation
       garden.country = arguments[:country]
     end
 
-    if garden.save
+    if garden.save!
       {
-        garden: garden,
-        errors: [],
-      }
-    else
-      {
-        garden: nil,
-        errors: session.errors.full_messages
+        garden: garden
       }
     end
   end

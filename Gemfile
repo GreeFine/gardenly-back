@@ -73,3 +73,4 @@ gem 'graphiql-rails', group: :development
 gem 'mini_magick'
 gem 'redis'
 gem 'rest-client'
+gem 'friendly_id'
