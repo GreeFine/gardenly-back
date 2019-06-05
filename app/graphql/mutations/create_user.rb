@@ -11,7 +11,7 @@ class Mutations::CreateUser < Mutations::BaseMutation
 
   def resolve(params)
     unless context[:current_session].nil?
-      raise GraphQL::ExecutionError.new('User still connected')
+      raise GraphQL::ExecutionError.new('user_already_logged')
     end
 
     # TODO : check password is strong

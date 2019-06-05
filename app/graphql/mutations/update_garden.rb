@@ -13,6 +13,27 @@ class Mutations::UpdateGarden < Mutations::BaseMutation
     garden = Garden.find(arguments[:id])
     garden.assign_attributes(arguments.except(:latitude, :longitude, :country))
 
+    tmpData = JSON.parse(arguments[:data])
+
+    tmpData["garden"].each do |tile|
+      if tile["type"] == "FlowerBed"
+        if Tile.find_by(key: tile["key"]).blank?
+          tileModel = Tile.create!(garden_id: arguments[:id], key: tile["key"])
+        else
+          tileModel = Tile.find_by(key: tile["key"])
+        end
+        e["data"]["elements"].each do |element|
+          if PlantTile.find_by(key: element.key, tile: tileModel).blank?
+            pTile = PlantTile.create!(plant: Plant.where(model: element["model"]), tile: tileModel)
+            plant = Plant.find_by(model: element["model"])
+            if Task.joins(:plant_tile).where("garden_id = ? AND plant_tiles.plant_id = ?", arguments[:id], plant.id).count == 0
+              Task.create!(garden_id: arguments[:id], plant_tile: pTile, start_date: plant.blossoming_start, end_date: plant.blossoming_end, body: "Il faut fleurir cette plante", public: false)
+            end
+          end
+        end
+      end
+    end
+
     if arguments[:latitude].present? && arguments[:longitude].present?
       geoCountry = Geocoder.search([arguments[:latitude].to_f, arguments[:longitude].to_f])
       garden.country = geoCountry.first.country
