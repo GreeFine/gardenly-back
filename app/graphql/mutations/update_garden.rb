@@ -1,4 +1,5 @@
 class Mutations::UpdateGarden < Mutations::BaseMutation
+
   argument :id, ID, required: true
   argument :name, String, required: false
   argument :data, String, required: false
