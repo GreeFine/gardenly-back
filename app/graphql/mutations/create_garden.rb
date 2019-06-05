@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Mutations::CreateGarden < Mutations::BaseMutation
   argument :name, String, required: true
   argument :data, String, required: true
@@ -10,9 +12,7 @@ class Mutations::CreateGarden < Mutations::BaseMutation
 
   def resolve(arguments)
     user = context[:current_user]
-    if user.nil?
-      return { errors: "Not connected" }
-    end
+    return GraphQL::ExecutionError.new('User not connected') if user.nil?
 
     garden = Garden.new(name: arguments[:name], data: arguments[:data], items: arguments[:items])
     garden.user = user
@@ -24,10 +24,18 @@ class Mutations::CreateGarden < Mutations::BaseMutation
       garden.country = arguments[:country]
     end
 
+<<<<<<< HEAD
     garden.save!
     {
       garden: garden,
       errors: [],
     }
+=======
+    if garden.save!
+      {
+        garden: garden
+      }
+    end
+>>>>>>> d4b3c01a32122bae841c833f3a7de37c5fd29eb4
   end
 end
