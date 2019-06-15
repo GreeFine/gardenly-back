@@ -7,6 +7,8 @@ module Types
     field :slug, String, null: false
     field :items, Integer, null: false
     field :country, String, null: true
+    field :tiles, [TileType], null: false
+    field :static_elements, [StaticElementType], null: false
     field :data, String, null: false
   end
 
