@@ -16,7 +16,7 @@ class Mutations::UpdateGarden < Mutations::BaseMutation
 
   def resolve(arguments)
     user = context[:current_user]
-    # return GraphQL::ExecutionError.new('User not connected') if user.nil?
+    return GraphQL::ExecutionError.new('User not connected') if user.nil?
 
     garden = Garden.find(arguments[:id]) # FIXME: Maybe check if it's his garden ???
     garden.assign_attributes(arguments.except(:latitude, :longitude, :country, :modifications, :deletions, :additions))
