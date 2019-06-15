@@ -4,7 +4,6 @@ class Mutations::UpdateMedium < Mutations::BaseMutation
   argument :description, String, required: false
 
   field :medium, Types::MediumType, null: true
-  field :errors, [String], null: false
 
   def resolve(arguments)
     medium = Medium.find(arguments[:id])
@@ -12,16 +11,9 @@ class Mutations::UpdateMedium < Mutations::BaseMutation
 
     # raise Pundit::NotAuthorizedError unless MediumPolicy.new(context[:current_user], medium).update?
 
-    if medium.save
-      {
-        medium: medium,
-        errors: [],
-      }
-    else
-      {
-        medium: medium,
-        errors: medium.errors.full_messages
-      }
-    end
+    medium.save!
+    {
+      medium: medium
+    }
   end
 end

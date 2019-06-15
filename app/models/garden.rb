@@ -6,6 +6,7 @@ class Garden < ApplicationRecord
 
   validates_uniqueness_of :name, scope: :user
   has_many :tiles, dependent: :destroy
+  has_many :static_elements, dependent: :destroy
   belongs_to :user
 
   def slug_candidates

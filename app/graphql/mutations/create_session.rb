@@ -7,10 +7,10 @@ class Mutations::CreateSession < Mutations::BaseMutation
   field :expires, String, null: true
 
   def resolve(params)
-    return GraphQL::ExecutionError.new('Already loged') unless context[:current_session].nil?
+    return GraphQL::ExecutionError.new('user_already_logged') unless context[:current_session].nil?
 
     user = User.find_by(email: params[:email], password: params[:password])
-    return GraphQL::ExecutionError.new('Invalid user mail or password') if user.nil?
+    return GraphQL::ExecutionError.new('invalid_mail_or_pwd') if user.nil?
 
     session = Session.create(user: user)
 
