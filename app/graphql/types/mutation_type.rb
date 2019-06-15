@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Types
   class MutationType < Types::BaseObject
     field :create_session, mutation: Mutations::CreateSession
@@ -15,5 +17,7 @@ module Types
     field :create_room, mutation: Mutations::CreateRoom
     field :create_message, mutation: Mutations::CreateMessage
     field :complete_task, mutation: Mutations::CompleteTask
+    field :create_friendship, mutation: Mutations::CreateFriendship
+    field :delete_friendship, mutation: Mutations::DeleteFriendship
   end
 end

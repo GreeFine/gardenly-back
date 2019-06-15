@@ -1,11 +1,11 @@
+# frozen_string_literal: true
+
 class Mutations::DeleteSession < Mutations::BaseMutation
   field :success, Boolean, null: true
 
   def resolve
     session = context[:current_session]
-    if session.nil?
-      return GraphQL::ExecutionError.new("no_session")
-    end
+    return GraphQL::ExecutionError.new("no_session") if session.nil?
     context[:cookies].delete :token
     if session.destroy!
       {
