@@ -83,6 +83,10 @@ class Mutations::UpdateGarden < Mutations::BaseMutation
       garden.country = arguments[:country]
     end
 
+    garden.save!
+    {
+      garden: garden
+    }
     if garden.save!
       {
         garden: garden

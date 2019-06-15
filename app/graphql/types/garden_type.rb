@@ -10,9 +10,15 @@ module Types
     field :tiles, [TileType], null: false
     field :static_elements, [StaticElementType], null: false
     field :data, String, null: false
+    field :plants, [PlantTileType], null: false
+
+    def plants
+      PlantTile.where(tile: object.tiles)
+    end
+
+    def data
+      object.data.to_json.to_s
+    end
   end
 
-  def data
-    object.data.to_json.to_s
-  end
 end
