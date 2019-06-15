@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_22_045443) do
+ActiveRecord::Schema.define(version: 2019_06_06_024854) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -180,6 +180,10 @@ ActiveRecord::Schema.define(version: 2019_05_22_045443) do
     t.datetime "updated_at", null: false
     t.uuid "plant_id"
     t.uuid "tile_id"
+    t.integer "key"
+    t.datetime "age"
+    t.float "sun_exposition"
+    t.integer "position", array: true
   end
 
   create_table "plants", force: :cascade do |t|
@@ -246,6 +250,18 @@ ActiveRecord::Schema.define(version: 2019_05_22_045443) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "static_elements", force: :cascade do |t|
+    t.float "position", array: true
+    t.float "rotation", array: true
+    t.integer "key"
+    t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
+    t.uuid "garden_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "type"
+    t.index ["garden_id"], name: "index_static_elements_on_garden_id"
+  end
+
   create_table "statistics", force: :cascade do |t|
     t.integer "users_count"
     t.integer "media_count"
@@ -289,6 +305,11 @@ ActiveRecord::Schema.define(version: 2019_05_22_045443) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "garden_id"
+    t.integer "key"
+    t.json "points"
+    t.string "name"
+    t.uuid "ground_type_id"
+    t.index ["ground_type_id"], name: "index_tiles_on_ground_type_id"
   end
 
   create_table "types", force: :cascade do |t|
@@ -312,6 +333,14 @@ ActiveRecord::Schema.define(version: 2019_05_22_045443) do
     t.string "last_name"
     t.string "first_name"
     t.string "avatar"
+  end
+
+  create_table "walls", force: :cascade do |t|
+    t.float "start", array: true
+    t.float "end", array: true
+    t.integer "key"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
