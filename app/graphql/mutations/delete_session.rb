@@ -5,8 +5,7 @@ class Mutations::DeleteSession < Mutations::BaseMutation
 
   def resolve
     session = context[:current_session]
-    return GraphQL::ExecutionError.new('No session found') if session.nil?
-
+    return GraphQL::ExecutionError.new("no_session") if session.nil?
     context[:cookies].delete :token
     if session.destroy!
       {

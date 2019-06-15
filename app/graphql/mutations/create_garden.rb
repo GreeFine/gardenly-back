@@ -24,18 +24,10 @@ class Mutations::CreateGarden < Mutations::BaseMutation
       garden.country = arguments[:country]
     end
 
-<<<<<<< HEAD
-    garden.save!
-    {
-      garden: garden,
-      errors: [],
-    }
-=======
     if garden.save!
       {
         garden: garden
       }
     end
->>>>>>> d4b3c01a32122bae841c833f3a7de37c5fd29eb4
   end
 end

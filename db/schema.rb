@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_27_025854) do
-
+ActiveRecord::Schema.define(version: 2019_06_15_013004) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -43,14 +42,6 @@ ActiveRecord::Schema.define(version: 2019_05_27_025854) do
     t.uuid "article_id"
   end
 
-
-  create_table "friendships", id: false, force: :cascade do |t|
-    t.uuid "user_id"
-    t.uuid "friend_user_id"
-    t.index ["friend_user_id", "user_id"], name: "index_friendships_on_friend_user_id_and_user_id", unique: true
-    t.index ["user_id", "friend_user_id"], name: "index_friendships_on_user_id_and_friend_user_id", unique: true
-  end
-  
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string "slug", null: false
     t.integer "sluggable_id", null: false
@@ -60,6 +51,13 @@ ActiveRecord::Schema.define(version: 2019_05_27_025854) do
     t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
+  end
+
+  create_table "friendships", id: false, force: :cascade do |t|
+    t.uuid "user_id"
+    t.uuid "friend_user_id"
+    t.index ["friend_user_id", "user_id"], name: "index_friendships_on_friend_user_id_and_user_id", unique: true
+    t.index ["user_id", "friend_user_id"], name: "index_friendships_on_user_id_and_friend_user_id", unique: true
   end
 
   create_table "garden_users", force: :cascade do |t|
@@ -189,6 +187,10 @@ ActiveRecord::Schema.define(version: 2019_05_27_025854) do
     t.datetime "updated_at", null: false
     t.uuid "plant_id"
     t.uuid "tile_id"
+    t.integer "key"
+    t.datetime "age"
+    t.float "sun_exposition"
+    t.json "data"
   end
 
   create_table "plants", force: :cascade do |t|
@@ -255,6 +257,17 @@ ActiveRecord::Schema.define(version: 2019_05_27_025854) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "static_elements", force: :cascade do |t|
+    t.integer "key"
+    t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
+    t.uuid "garden_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "type"
+    t.json "data"
+    t.index ["garden_id"], name: "index_static_elements_on_garden_id"
+  end
+
   create_table "statistics", force: :cascade do |t|
     t.integer "users_count"
     t.integer "media_count"
@@ -298,6 +311,11 @@ ActiveRecord::Schema.define(version: 2019_05_27_025854) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "garden_id"
+    t.integer "key"
+    t.string "name"
+    t.uuid "ground_type_id"
+    t.json "data"
+    t.index ["ground_type_id"], name: "index_tiles_on_ground_type_id"
   end
 
   create_table "types", force: :cascade do |t|
@@ -321,6 +339,14 @@ ActiveRecord::Schema.define(version: 2019_05_27_025854) do
     t.string "last_name"
     t.string "first_name"
     t.string "avatar"
+  end
+
+  create_table "walls", force: :cascade do |t|
+    t.float "start", array: true
+    t.float "end", array: true
+    t.integer "key"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

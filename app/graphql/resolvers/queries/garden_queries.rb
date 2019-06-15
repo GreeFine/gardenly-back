@@ -37,7 +37,7 @@ module Resolvers
         type Types::GardenType.connection_type
 
         def call(obj, args, ctx)
-          return GraphQL::ExecutionError.new('User not connected') if ctx[:current_user].nil?
+          return GraphQL::ExecutionError.new('user_no_logon') if ctx[:current_user].nil?
 
           ctx[:current_user].gardens
         end
