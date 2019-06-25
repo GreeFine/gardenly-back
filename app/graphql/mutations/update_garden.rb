@@ -27,11 +27,12 @@ class Mutations::UpdateGarden < Mutations::BaseMutation
         begin
           case el["type"]
           when "FlowerBed"
-            Tile.create!(key: el["key"], name: el["name"], ground_type_id: el["ground_type_id"], data: el["data"], garden: garden)
+            Tile.create!(key: el["key"].to_i, name: el["name"], ground_type_id: el["ground_type_id"], data: el["data"], garden: garden)
           when "StaticElement"
-            StaticElement.create!(key: el["key"], data: el["data"], garden: garden)
+            byebug
+            StaticElement.create!(key: el["key"].to_i, data: el["data"], garden: garden)
           when "Plant"
-            PlantTile.create!(key: el["key"], plant_id: el["plant_id"], tile: Tile.find_by(garden: garden, key: el["tile_key"]), age: el["age"], sun_exposition: el["sun_exposition"], data: el["data"])
+            PlantTile.create!(key: el["key"].to_i, plant_id: el["plant_id"], tile: Tile.find_by(garden: garden, key: el["tile_key"]), age: el["age"], sun_exposition: el["sun_exposition"], data: el["data"])
           end
         rescue => error
           TechReport.create!(body: error)
@@ -44,15 +45,15 @@ class Mutations::UpdateGarden < Mutations::BaseMutation
       modifications.each do |el|
         case el["type"]
         when "FlowerBed"
-          tile = Tile.find_by(key: el["key"], garden: garden)
+          tile = Tile.find_by(key: el["key"].to_i, garden: garden)
           tile.assign_attributes(el.except("type"))
           tile.save!
         when "StaticElement"
-          st_el = StaticElement.find_by(key: el["key"], garden: garden)
+          st_el = StaticElement.find_by(key: el["key"].to_i, garden: garden)
           st_el.assign_attributes(el.except("type"))
           st_el.save!
         when "Plant"
-          plant_t = PlantTile.find_by(key: el["key"], tile: garden.tiles)
+          plant_t = PlantTile.find_by(key: el["key"].to_i, tile: garden.tiles)
           plant_t.assign_attributes(el.except("type"))
           plant_t.save!
         end
@@ -64,13 +65,13 @@ class Mutations::UpdateGarden < Mutations::BaseMutation
       deletions.each do |el|
         case el["type"]
         when "FlowerBed"
-          tile = Tile.find_by(key: el["key"], garden: garden)
+          tile = Tile.find_by(key: el["key"].to_i, garden: garden)
           tile.destroy!
         when "StaticElement"
-          st_el = StaticElement.find_by(key: el["key"], garden: garden)
+          st_el = StaticElement.find_by(key: el["key"].to_i, garden: garden)
           st_el.destroy!
         when "Plant"
-          plant_t = PlantTile.find_by(key: el["key"], tile: garden.tiles)
+          plant_t = PlantTile.find_by(key: el["key"].to_i, tile: garden.tiles)
           plant_t.destroy!
         end
       end

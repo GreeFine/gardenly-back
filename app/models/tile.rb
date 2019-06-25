@@ -1,5 +1,6 @@
 class Tile < ApplicationRecord
   self.primary_key = :uuid
+  attr_accessor :data, :key, :name, :ground_type_id
 
   belongs_to :garden
   belongs_to :ground_type
