@@ -13,7 +13,7 @@ GraphQL::Errors.configure(GardenlySchema) do
   end
 
   rescue_from ActiveRecord::RecordInvalid do |exception|
-    GraphQL::ExecutionError.new(exception.record.errors.full_messages.join("\n"))
+    GraphQL::ExecutionError.new(exception.record.errors.full_messages.first)
   end
 
   rescue_from ActiveRecord::StatementInvalid do |exception|

@@ -81,4 +81,5 @@ Creer une migration
 Appliquer la migration
 > bundle exec rails db:migrate
 
-
+Installation des dependances pour medias (images....)
+> sudo apt-get install imagemagick

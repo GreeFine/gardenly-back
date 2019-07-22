@@ -39,7 +39,7 @@ module Resolvers
         type Types::RoomType.connection_type
 
         def call(_obj, _args, ctx)
-          return GraphQL::ExecutionError.new('User not connected') if ctx[:current_user].nil?
+          return GraphQL::ExecutionError.new('user_no_logon') if ctx[:current_user].nil?
 
           ctx[:current_user].rooms
         end

@@ -7,6 +7,7 @@ module Types
     field :username, String, null: false
     field :first_name, String, null: false
     field :avatar, String, null: true
+    field :thumbnail, String, null: true
     field :last_name, String, null: false
     field :email, String, null: false
     field :age, Integer, null: true
@@ -22,6 +23,10 @@ module Types
 
     def avatar
       object.avatar_url
+    end
+
+    def thumbnail
+      object.avatar_url(:thumbnail)
     end
 
     def is_moderator
