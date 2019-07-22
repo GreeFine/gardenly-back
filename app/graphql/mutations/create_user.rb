@@ -18,9 +18,10 @@ class Mutations::CreateUser < Mutations::BaseMutation
     user = User.new(params)
 
     # FIXME: Change public room for friends rooms
-    publicroom = Room.first;
-    user.rooms << publicroom
-
+    if not Room.first.nil?
+      publicroom = Room.first;
+      user.rooms << publicroom
+    end
     user.save!
     {
       user: user

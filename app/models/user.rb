@@ -14,11 +14,6 @@ class User < ApplicationRecord
   has_many :articles
   has_many :media, dependent: :destroy
   has_many :gardens, dependent: :destroy
+  has_many :relations, ->(user) { unscope(:where).where("user_id = :id OR friend_id = :id", id: user.id) }, dependent: :destroy
   has_and_belongs_to_many :rooms
-
-  has_and_belongs_to_many :friendships,
-                          class_name: 'User',
-                          join_table: :friendships,
-                          foreign_key: :user_id,
-                          association_foreign_key: :friend_user_id
 end
