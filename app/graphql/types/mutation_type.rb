@@ -17,7 +17,8 @@ module Types
     field :create_room, mutation: Mutations::CreateRoom
     field :create_message, mutation: Mutations::CreateMessage
     field :complete_task, mutation: Mutations::CompleteTask
-    field :create_friendship, mutation: Mutations::CreateFriendship
-    field :delete_friendship, mutation: Mutations::DeleteFriendship
+    field :create_relation, mutation: Mutations::CreateRelation
+    field :change_relation, mutation: Mutations::ChangeRelation
+    field :delete_relation, mutation: Mutations::DeleteRelation
   end
 end
