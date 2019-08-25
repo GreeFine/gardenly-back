@@ -8,6 +8,7 @@ class Mutations::UpdateUser < Mutations::BaseMutation
   argument :address, String, required: false
   argument :date_of_birth, String, required: false
   argument :phone_number, String, required: false
+  argument :avatar, String, required: false
 
   field :user, Types::UserType, null: true
 

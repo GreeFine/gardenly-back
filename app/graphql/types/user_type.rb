@@ -21,12 +21,8 @@ module Types
     field :gardens, [GardenType], null: false
     field :relations, [RelationType], null: false
 
-    def avatar
-      object.avatar_url
-    end
-
     def thumbnail
-      object.avatar_url(:thumbnail)
+      object.avatar.insert(-42, "thumbnail_")
     end
 
     def is_moderator

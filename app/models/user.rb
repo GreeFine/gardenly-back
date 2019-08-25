@@ -6,7 +6,6 @@ class User < ApplicationRecord
   validates_uniqueness_of :email
   validates_uniqueness_of :phone_number, allow_blank: true
   validates_uniqueness_of :username
-  mount_base64_uploader :avatar, AvatarUploader
 
   has_one :moderator
   has_many :tasks
