@@ -6,6 +6,7 @@ class Mutations::CreateGarden < Mutations::BaseMutation
   argument :latitude, String, required: false
   argument :longitude, String, required: false
   argument :country, String, required: false
+  argument :city, String, required: false
   argument :items, Integer, required: false
 
   field :garden, Types::GardenType, null: false
@@ -20,8 +21,12 @@ class Mutations::CreateGarden < Mutations::BaseMutation
     if arguments[:latitude].present? && arguments[:longitude].present?
       geoCountry = Geocoder.search([arguments[:latitude].to_f, arguments[:longitude].to_f])
       garden.country = geoCountry.first.country
+      garden.city = geoCountry.first.city
     elsif arguments[:country].present?
       garden.country = arguments[:country]
+      if arguments[:city].present?
+        garden.city = arguments[:city]
+      end
     end
 
     if garden.save!
