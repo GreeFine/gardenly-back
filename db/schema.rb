@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_15_013004) do
+ActiveRecord::Schema.define(version: 2019_09_16_134153) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -53,6 +53,13 @@ ActiveRecord::Schema.define(version: 2019_06_15_013004) do
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
   end
 
+  create_table "friendships", id: false, force: :cascade do |t|
+    t.uuid "user_id"
+    t.uuid "friend_user_id"
+    t.index ["friend_user_id", "user_id"], name: "index_friendships_on_friend_user_id_and_user_id", unique: true
+    t.index ["user_id", "friend_user_id"], name: "index_friendships_on_user_id_and_friend_user_id", unique: true
+  end
+
   create_table "garden_users", force: :cascade do |t|
     t.uuid "uuid", default: -> { "uuid_generate_v4()" }, null: false
     t.datetime "created_at", null: false
@@ -71,6 +78,7 @@ ActiveRecord::Schema.define(version: 2019_06_15_013004) do
     t.string "country"
     t.integer "items"
     t.string "slug"
+    t.string "city"
     t.index ["slug"], name: "index_gardens_on_slug"
   end
 
