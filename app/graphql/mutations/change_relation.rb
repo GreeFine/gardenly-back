@@ -10,7 +10,6 @@ class Mutations::ChangeRelation < Mutations::BaseMutation
 
     puts params[:id]
     relation = Relation.find(params[:id])
-    puts "relation???", relation
 
     return GraphQL::ExecutionError.new('Relation not found') if relation.nil?
 

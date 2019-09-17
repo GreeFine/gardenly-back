@@ -6,8 +6,8 @@ module Types
     field :id, ID, null: false
     field :username, String, null: false
     field :first_name, String, null: false
-    field :avatar, String, null: true
-    field :thumbnail, String, null: true
+    field :avatar, String, null: false
+    field :thumbnail, String, null: false
     field :last_name, String, null: false
     field :email, String, null: false
     field :age, Integer, null: true
@@ -21,12 +21,8 @@ module Types
     field :gardens, [GardenType], null: false
     field :relations, [RelationType], null: false
 
-    def avatar
-      object.avatar_url
-    end
-
     def thumbnail
-      object.avatar_url(:thumbnail)
+      object.avatar.insert(-42, "thumbnail_")
     end
 
     def is_moderator

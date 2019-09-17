@@ -16,6 +16,7 @@ class Mutations::CreateUser < Mutations::BaseMutation
 
     # TODO : check password is strong
     user = User.new(params)
+    user.avatar = "https://s3.gardenly.app/dev/default-avatar.png" # default avatar
 
     # FIXME: Change public room for friends rooms
     if not Room.first.nil?
