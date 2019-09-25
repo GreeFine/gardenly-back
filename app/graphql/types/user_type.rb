@@ -22,6 +22,9 @@ module Types
     field :relations, [RelationType], null: false
 
     def thumbnail
+      if object.avatar == "https://s3.gardenly.app/dev/default-avatar.png"
+        return object.avatar
+      end
       object.avatar.insert(-42, "thumbnail_")
     end
 
