@@ -16,7 +16,7 @@ module Types
       Types::Query::TaskQuery,
       Types::Query::PlantFieldQuery,
       Types::Query::MemoQuery,
-      Types::Query::NotificationQuery,
+      Types::Query::NotificationQuery
     ])
   end
 end
