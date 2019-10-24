@@ -20,5 +20,9 @@ module Types
     field :create_relation, mutation: Mutations::CreateRelation
     field :change_relation, mutation: Mutations::ChangeRelation
     field :delete_relation, mutation: Mutations::DeleteRelation
+    field :update_memo, mutation: Mutations::UpdateMemo
+    field :create_memo, mutation: Mutations::CreateMemo
+    field :delete_memo, mutation: Mutations::DeleteMemo,
+    field :read_notifications, mutation: Mutations::ReadNotifications,
   end
 end

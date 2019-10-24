@@ -7,6 +7,7 @@ module Types
 
       field :getMedium, function: GetMedium.new
       field :getMedia, function: GetMedia.new
+      connection :getUserMedia, function: GetUserMedia.new
       connection :getAllMedia, function: GetAllMedia.new
     end
   end

@@ -14,7 +14,9 @@ module Types
       Types::Query::LunarCycleQuery,
       Types::Query::RoomQuery,
       Types::Query::TaskQuery,
-      Types::Query::PlantFieldQuery
+      Types::Query::PlantFieldQuery,
+      Types::Query::MemoQuery,
+      Types::Query::NotificationQuery
     ])
   end
 end

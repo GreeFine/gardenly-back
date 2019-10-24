@@ -23,6 +23,15 @@ module Resolvers
         end
       end
 
+      class GetUserMedia < GraphQL::Function
+        description 'Get all Media'
+        type Types::MediumType.connection_type
+
+        def call(obj, args, ctx)
+          Medium.where(user: ctx[:current_user])
+        end
+      end
+
       class GetAllMedia < GraphQL::Function
         description 'Get all Media'
         type Types::MediumType.connection_type
