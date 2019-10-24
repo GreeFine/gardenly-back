@@ -7,11 +7,11 @@ class Article < ApplicationRecord
   has_many :comments
   has_many :reviews
 
-  after_commit :notify_subscriber_of_addition
+  # after_commit :notify_subscriber_of_addition
 
   private
 
-  def notify_subscriber_of_addition
-    GardenlySchema.subscriptions.trigger('on_article', {}, self)
-  end
+  # def notify_subscriber_of_addition
+  #   GardenlySchema.subscriptions.trigger('on_article', {}, self)
+  # end
 end
