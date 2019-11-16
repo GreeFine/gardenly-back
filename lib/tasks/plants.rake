@@ -105,4 +105,86 @@ namespace :plants do
     end
 
   end
+
+  task :add_from_cli, [:payload] => :environment do |t, args|
+    Rails.logger = Logger.new(STDOUT)
+
+    tmp_payload = JSON.parse(args[:payload])
+    height = tmp_payload[:height].split("-")
+    tmp_payload[:height_low] = height[0].to_i
+    height.count == 1 ?
+      tmp_payload[:height_high] = height[0].to_i
+      : tmp_payload[:height_high] = height[1].to_i
+
+    bloss_start = []
+    tmp_payload[:blossoming_start].split(", ").each do |e|
+      bloss_start << e.to_i
+    end
+    bloss_end = []
+    tmp_payload[:blossoming_end].split(", ").each do |e|
+      bloss_end << e.to_i
+    end
+    tmp_payload[:blossoming_start] = bloss_start
+    tmp_payload[:blossoming_end] = bloss_end
+
+    tmp_payload[:type] = Type.find_or_create_by(name: tmp_payload[:type]).uuid
+
+    shapes = []
+    tmp_payload[:shapes].split(", ").each do |e|
+      shapes << Shape.find_or_create_by(name: e).uuid
+    end
+    tmp_payload[:shapes] = shapes
+
+    grounds = []
+    tmp_payload[:grounds].split(", ").each do |e|
+      grounds << GroundType.find_or_create_by(name: e).uuid
+    end
+    tmp_payload[:grounds] = grounds
+
+    tmp_payload[:ph_range_low] = tmp_payload[:ph].split(", ").last.to_f
+    tmp_payload[:ph_range_high] = tmp_payload[:ph].split(", ").first.to_f
+
+    colors = []
+    tmp_payload[:colors].split(", ").each do |e|
+      colors << Color.find_or_create_by(name: e).uuid
+    end
+    plants[i][:colors] = colors
+
+    periodicities = []
+    tmp_payload[:periodicities].split(", ").each do |e|
+      periodicities << Periodicity.find_or_create_by(name: e).uuid
+    end
+    tmp_payload[:periodicities] = periodicities
+
+    begin
+      plant = Plant.create!(
+        name: e[:name],
+        height_low: e[:height_low],
+        height_high: e[:height_high],
+        blossoming_start: e[:blossoming_start],
+        blossoming_end: e[:blossoming_end],
+        type_id: e[:type],
+        shape_ids: e[:shapes],
+        ground_type_ids: e[:grounds],
+        ph_range_low: e[:ph_range_low],
+        ph_range_high: e[:ph_range_high],
+        rusticity: e[:rusticity],
+        water_need: e[:water_need],
+        sun_need: e[:sun_need],
+        color_ids: e[:colors],
+        periodicity_ids: e[:periodicities],
+        model: e[:model],
+        description: e[:description],
+        tips: e[:tips]
+      )
+      begin
+        plant.remote_photo_url = e[:photo_url]
+      rescue => error
+        TechReport.create!(body: "PLANT MEDIA:: #{e[:name]} -- #{e[:photo_url]} -- #{error}")
+      end
+      plant.save!
+    rescue => error
+      TechReport.create!(body: "PLANT CREATE:: #{e[:name]} -- #{error}")
+    end
+  end
 end
