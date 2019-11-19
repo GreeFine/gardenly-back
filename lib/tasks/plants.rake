@@ -312,7 +312,10 @@ namespace :plants do
     end
 
     if tmp_fields.include?(16)
+      puts "IM HERE"
       plant.remote_photo_url = tmp_payload["photo_url"]
+    else
+      puts "IM NOT HERE"
     end
 
     begin
