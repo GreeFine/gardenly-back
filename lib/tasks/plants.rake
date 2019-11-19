@@ -210,7 +210,7 @@ namespace :plants do
     args[:payload].split("INTERKEY").each do |pair|
       tmp_payload["#{pair.split("KEYVAL").first}"] = pair.split("KEYVAL").last
     end
-    tmp_fields = args[:fields].split(" ")
+    tmp_fields = args[:fields].split("-")
     plant = Plant.find_by(name: args[:name])
 
     puts args[:name]
@@ -218,11 +218,11 @@ namespace :plants do
     puts tmp_fields
     puts plant
 
-    if tmp_fields.include?("1")
+    if tmp_fields.include?(1)
       plant.name = tmp_payload["name"]
     end
 
-    if tmp_fields.include?("2")
+    if tmp_fields.include?(2)
       height = tmp_payload["height"].split("-")
       plant.height_low = height[0].to_i
       height.count == 1 ?
@@ -230,7 +230,7 @@ namespace :plants do
         : plant.height_high = height[1].to_i
     end
 
-    if tmp_fields.include?("3")
+    if tmp_fields.include?(3)
       bloss_start = []
       tmp_payload["blossoming_start"].split("-").each do |e|
         bloss_start << e.to_i
@@ -243,11 +243,11 @@ namespace :plants do
       plant.blossoming_end = bloss_end
     end
 
-    if tmp_fields.include?("4")
+    if tmp_fields.include?(4)
       plant.type_id = Type.find_or_create_by(name: tmp_payload["type"]).uuid
     end
 
-    if tmp_fields.include?("5")
+    if tmp_fields.include?(5)
       shapes = []
       tmp_payload["shapes"].split("-").each do |e|
         shapes << Shape.find_or_create_by(name: e).uuid
@@ -255,7 +255,7 @@ namespace :plants do
       plant.shape_ids = shapes
     end
 
-    if tmp_fields.include?("6")
+    if tmp_fields.include?(6)
       grounds = []
       tmp_payload["grounds"].split("-").each do |e|
         grounds << GroundType.find_or_create_by(name: e).uuid
@@ -263,24 +263,24 @@ namespace :plants do
       plant.ground_ids = grounds
     end
 
-    if tmp_fields.include?("7")
+    if tmp_fields.include?(7)
       plant.ph_range_low = tmp_payload["ph"].split("-").last.to_f
       plant.ph_range_high = tmp_payload["ph"].split("-").first.to_f
     end
 
-    if tmp_fields.include?("8")
+    if tmp_fields.include?(8)
       plant.rusticity = tmp_payload["rusticity"]
     end
 
-    if tmp_fields.include?("9")
+    if tmp_fields.include?(9)
       plant.water_need = tmp_payload["water_need"]
     end
 
-    if tmp_fields.include?("10")
+    if tmp_fields.include?(10)
       plant.sun_need = tmp_payload["sun_need"]
     end
 
-    if tmp_fields.include?("11")
+    if tmp_fields.include?(11)
       colors = []
       tmp_payload["colors"].split("-").each do |e|
         colors << Color.find_or_create_by(name: e).uuid
@@ -288,7 +288,7 @@ namespace :plants do
       plant.color_ids = colors
     end
 
-    if tmp_fields.include?("12")
+    if tmp_fields.include?(12)
       periodicities = []
       tmp_payload["periodicities"].split("-").each do |e|
         periodicities << Periodicity.find_or_create_by(name: e).uuid
@@ -296,19 +296,19 @@ namespace :plants do
       plant.periodicities = periodicities
     end
 
-    if tmp_fields.include?("13")
+    if tmp_fields.include?(13)
       plant.description = tmp_payload["description"]
     end
 
-    if tmp_fields.include?("14")
+    if tmp_fields.include?(14)
       plant.tips = tmp_payload["tips"]
     end
 
-    if tmp_fields.include?("15")
+    if tmp_fields.include?(15)
       plant.model = tmp_payload["model"]
     end
 
-    if tmp_fields.include?("16")
+    if tmp_fields.include?(16)
       plant.remote_photo_url = tmp_payload["photo_url"]
     end
 
