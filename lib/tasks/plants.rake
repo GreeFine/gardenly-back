@@ -113,7 +113,11 @@ namespace :plants do
   task :add_from_cli, [:payload] => :environment do |t, args|
     Rails.logger = Logger.new(STDOUT)
 
-    tmp_payload = JSON.parse(args[:payload].gsub("\\", ""))
+    puts args[:payload]
+    tmp_payload = {}
+    args[:payload.split(" INTERKEY ").each do |pair|
+      tmp_payload[pair.split(" KEYVAL ").first] = pair.split(" KEYVAL ").last
+    end
     puts tmp_payload
 
     name = tmp_payload["name"]
