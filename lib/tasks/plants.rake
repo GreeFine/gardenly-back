@@ -210,7 +210,7 @@ namespace :plants do
     args[:payload].split("INTERKEY").each do |pair|
       tmp_payload["#{pair.split("KEYVAL").first}"] = pair.split("KEYVAL").last
     end
-    tmp_fields = args[:fields].split("-")
+    tmp_fields = Array(args[:fields].split("-"))
     plant = Plant.find_by(name: args[:name])
 
     tmp_fields.each do |e|
