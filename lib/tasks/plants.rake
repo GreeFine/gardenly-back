@@ -213,7 +213,7 @@ namespace :plants do
     tmp_fields = args[:fields].split("-")
     plant = Plant.find_by(name: args[:name])
 
-    tmp_field.each do |e|
+    tmp_fields.each do |e|
       e = e.to_i
     end
     puts args[:name]
