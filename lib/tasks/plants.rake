@@ -205,7 +205,11 @@ namespace :plants do
   task :update_from_cli, [:name, :fields, :payload] => :environment do |t, args|
     Rails.logger = Logger.new(STDOUT)
 
-    tmp_payload = JSON.parse(args[:payload].tr("\\", ""))
+    puts args[:payload]
+    tmp_payload = {}
+    args[:payload].split("INTERKEY").each do |pair|
+      tmp_payload["#{pair.split("KEYVAL").first}"] = pair.split("KEYVAL").last
+    end
     tmp_fields = args[:fields].split(" ")
     plant = Plant.find_by(name: args[:name])
 
@@ -228,11 +232,11 @@ namespace :plants do
 
     if tmp_fields.include?("3")
       bloss_start = []
-      tmp_payload["blossoming_start"].split(", ").each do |e|
+      tmp_payload["blossoming_start"].split("-").each do |e|
         bloss_start << e.to_i
       end
       bloss_end = []
-      tmp_payload["blossoming_end"].split(", ").each do |e|
+      tmp_payload["blossoming_end"].split("-").each do |e|
         bloss_end << e.to_i
       end
       plant.blossoming_start = bloss_start
@@ -245,7 +249,7 @@ namespace :plants do
 
     if tmp_fields.include?("5")
       shapes = []
-      tmp_payload["shapes"].split(", ").each do |e|
+      tmp_payload["shapes"].split("-").each do |e|
         shapes << Shape.find_or_create_by(name: e).uuid
       end
       plant.shape_ids = shapes
@@ -253,15 +257,15 @@ namespace :plants do
 
     if tmp_fields.include?("6")
       grounds = []
-      tmp_payload["grounds"].split(", ").each do |e|
+      tmp_payload["grounds"].split("-").each do |e|
         grounds << GroundType.find_or_create_by(name: e).uuid
       end
       plant.ground_ids = grounds
     end
 
     if tmp_fields.include?("7")
-      plant.ph_range_low = tmp_payload["ph"].split(", ").last.to_f
-      plant.ph_range_high = tmp_payload["ph"].split(", ").first.to_f
+      plant.ph_range_low = tmp_payload["ph"].split("-").last.to_f
+      plant.ph_range_high = tmp_payload["ph"].split("-").first.to_f
     end
 
     if tmp_fields.include?("8")
@@ -278,7 +282,7 @@ namespace :plants do
 
     if tmp_fields.include?("11")
       colors = []
-      tmp_payload["colors"].split(", ").each do |e|
+      tmp_payload["colors"].split("-").each do |e|
         colors << Color.find_or_create_by(name: e).uuid
       end
       plant.color_ids = colors
@@ -286,7 +290,7 @@ namespace :plants do
 
     if tmp_fields.include?("12")
       periodicities = []
-      tmp_payload["periodicities"].split(", ").each do |e|
+      tmp_payload["periodicities"].split("-").each do |e|
         periodicities << Periodicity.find_or_create_by(name: e).uuid
       end
       plant.periodicities = periodicities
