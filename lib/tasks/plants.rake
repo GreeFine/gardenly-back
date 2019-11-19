@@ -118,7 +118,6 @@ namespace :plants do
     args[:payload.split(" INTERKEY ").each do |pair|
       tmp_payload["#{pair.split(" KEYVAL ").first}"] = pair.split(" KEYVAL ").last
     end
-    puts tmp_payload
 
     name = tmp_payload["name"]
     height = tmp_payload["height"].split("-")
