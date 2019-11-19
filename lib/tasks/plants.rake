@@ -116,7 +116,7 @@ namespace :plants do
     puts args[:payload]
     tmp_payload = {}
     args[:payload].split("INTERKEY").each do |pair|
-      tmp_payload["#{pair.split("KEYVAL").first}"] = pair.split(" KEYVAL ").last
+      tmp_payload["#{pair.split("KEYVAL").first}"] = pair.split("KEYVAL").last
     end
 
     name = tmp_payload["name"]
@@ -127,11 +127,11 @@ namespace :plants do
       : tmp_payload["height_high"] = height[1].to_i
 
     bloss_start = []
-    tmp_payload["blossoming_start"].split(", ").each do |e|
+    tmp_payload["blossoming_start"].split(",").each do |e|
       bloss_start << e.to_i
     end
     bloss_end = []
-    tmp_payload["blossoming_end"].split(", ").each do |e|
+    tmp_payload["blossoming_end"].split(",").each do |e|
       bloss_end << e.to_i
     end
     tmp_payload["blossoming_start"] = bloss_start
@@ -140,28 +140,28 @@ namespace :plants do
     tmp_payload["type"] = Type.find_or_create_by(name: tmp_payload["type"]).uuid
 
     shapes = []
-    tmp_payload["shapes"].split(", ").each do |e|
+    tmp_payload["shapes"].split(",").each do |e|
       shapes << Shape.find_or_create_by(name: e).uuid
     end
     tmp_payload["shapes"] = shapes
 
     grounds = []
-    tmp_payload["grounds"].split(", ").each do |e|
+    tmp_payload["grounds"].split(",").each do |e|
       grounds << GroundType.find_or_create_by(name: e).uuid
     end
     tmp_payload["grounds"] = grounds
 
-    tmp_payload["ph_range_low"] = tmp_payload["ph"].split(", ").last.to_f
-    tmp_payload["ph_range_high"] = tmp_payload["ph"].split(", ").first.to_f
+    tmp_payload["ph_range_low"] = tmp_payload["ph"].split(",").last.to_f
+    tmp_payload["ph_range_high"] = tmp_payload["ph"].split(",").first.to_f
 
     colors = []
-    tmp_payload["colors"].split(", ").each do |e|
+    tmp_payload["colors"].split(",").each do |e|
       colors << Color.find_or_create_by(name: e).uuid
     end
     tmp_payload["colors"] = colors
 
     periodicities = []
-    tmp_payload["periodicities"].split(", ").each do |e|
+    tmp_payload["periodicities"].split(",").each do |e|
       periodicities << Periodicity.find_or_create_by(name: e).uuid
     end
     tmp_payload["periodicities"] = periodicities
