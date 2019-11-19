@@ -5,7 +5,7 @@ module Types
     field :id, ID, null: false
     field :name, String, null: false
     field :photo, String, null: false
-    field :thumbnail, String, null: false
+    field :thumbnail, String, null: true
     field :blossoming_start, [Integer], null: false
     field :blossoming_end, [Integer], null: false
     field :height_low, Integer, null: true
