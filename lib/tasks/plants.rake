@@ -115,7 +115,7 @@ namespace :plants do
 
     puts args[:payload]
     tmp_payload = {}
-    args[:payload.split(" INTERKEY ").each do |pair|
+    args[:payload].split(" INTERKEY ").each do |pair|
       tmp_payload["#{pair.split(" KEYVAL ").first}"] = pair.split(" KEYVAL ").last
     end
 
