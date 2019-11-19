@@ -106,85 +106,209 @@ namespace :plants do
 
   end
 
+  ###################
+  ###################
+  ###################
+  
   task :add_from_cli, [:payload] => :environment do |t, args|
     Rails.logger = Logger.new(STDOUT)
 
-    tmp_payload = JSON.parse(args[:payload])
-    height = tmp_payload[:height].split("-")
-    tmp_payload[:height_low] = height[0].to_i
+    tmp_payload = JSON.parse(args[:payload].gsub("\\", ""))
+    puts tmp_payload
+
+    name = tmp_payload["name"]
+    height = tmp_payload["height"].split("-")
+    tmp_payload["height_low"] = height[0].to_i
     height.count == 1 ?
-      tmp_payload[:height_high] = height[0].to_i
-      : tmp_payload[:height_high] = height[1].to_i
+      tmp_payload["height_high"] = height[0].to_i
+      : tmp_payload["height_high"] = height[1].to_i
 
     bloss_start = []
-    tmp_payload[:blossoming_start].split(", ").each do |e|
+    tmp_payload["blossoming_start"].split(", ").each do |e|
       bloss_start << e.to_i
     end
     bloss_end = []
-    tmp_payload[:blossoming_end].split(", ").each do |e|
+    tmp_payload["blossoming_end"].split(", ").each do |e|
       bloss_end << e.to_i
     end
-    tmp_payload[:blossoming_start] = bloss_start
-    tmp_payload[:blossoming_end] = bloss_end
+    tmp_payload["blossoming_start"] = bloss_start
+    tmp_payload["blossoming_end"] = bloss_end
 
-    tmp_payload[:type] = Type.find_or_create_by(name: tmp_payload[:type]).uuid
+    tmp_payload["type"] = Type.find_or_create_by(name: tmp_payload["type"]).uuid
 
     shapes = []
-    tmp_payload[:shapes].split(", ").each do |e|
+    tmp_payload["shapes"].split(", ").each do |e|
       shapes << Shape.find_or_create_by(name: e).uuid
     end
-    tmp_payload[:shapes] = shapes
+    tmp_payload["shapes"] = shapes
 
     grounds = []
-    tmp_payload[:grounds].split(", ").each do |e|
+    tmp_payload["grounds"].split(", ").each do |e|
       grounds << GroundType.find_or_create_by(name: e).uuid
     end
-    tmp_payload[:grounds] = grounds
+    tmp_payload["grounds"] = grounds
 
-    tmp_payload[:ph_range_low] = tmp_payload[:ph].split(", ").last.to_f
-    tmp_payload[:ph_range_high] = tmp_payload[:ph].split(", ").first.to_f
+    tmp_payload["ph_range_low"] = tmp_payload["ph"].split(", ").last.to_f
+    tmp_payload["ph_range_high"] = tmp_payload["ph"].split(", ").first.to_f
 
     colors = []
-    tmp_payload[:colors].split(", ").each do |e|
+    tmp_payload["colors"].split(", ").each do |e|
       colors << Color.find_or_create_by(name: e).uuid
     end
-    plants[i][:colors] = colors
+    tmp_payload["colors"] = colors
 
     periodicities = []
-    tmp_payload[:periodicities].split(", ").each do |e|
+    tmp_payload["periodicities"].split(", ").each do |e|
       periodicities << Periodicity.find_or_create_by(name: e).uuid
     end
-    tmp_payload[:periodicities] = periodicities
+    tmp_payload["periodicities"] = periodicities
 
     begin
       plant = Plant.create!(
-        name: e[:name],
-        height_low: e[:height_low],
-        height_high: e[:height_high],
-        blossoming_start: e[:blossoming_start],
-        blossoming_end: e[:blossoming_end],
-        type_id: e[:type],
-        shape_ids: e[:shapes],
-        ground_type_ids: e[:grounds],
-        ph_range_low: e[:ph_range_low],
-        ph_range_high: e[:ph_range_high],
-        rusticity: e[:rusticity],
-        water_need: e[:water_need],
-        sun_need: e[:sun_need],
-        color_ids: e[:colors],
-        periodicity_ids: e[:periodicities],
-        model: e[:model],
-        description: e[:description],
-        tips: e[:tips]
+        name: tmp_payload["name"],
+        height_low: tmp_payload["height_low"],
+        height_high: tmp_payload["height_high"],
+        blossoming_start: tmp_payload["blossoming_start"],
+        blossoming_end: tmp_payload["blossoming_end"],
+        type_id: tmp_payload["type"],
+        shape_ids: tmp_payload["shapes"],
+        ground_type_ids: tmp_payload["grounds"],
+        ph_range_low: tmp_payload["ph_range_low"],
+        ph_range_high: tmp_payload["ph_range_high"],
+        rusticity: tmp_payload["rusticity"],
+        water_need: tmp_payload["water_need"],
+        sun_need: tmp_payload["sun_need"],
+        color_ids: tmp_payload["colors"],
+        periodicity_ids: tmp_payload["periodicities"],
+        model: tmp_payload["model"],
+        description: tmp_payload["description"],
+        tips: tmp_payload["tips"]
       )
       begin
-        plant.remote_photo_url = e[:photo_url]
+        plant.remote_photo_url = tmp_payload["photo_url"]
       rescue => error
-        TechReport.create!(body: "PLANT MEDIA:: #{e[:name]} -- #{e[:photo_url]} -- #{error}")
+        TechReport.create!(body: "PLANT MEDIA:: #{tmp_payload["name"]} -- #{tmp_payload["photo_url"]} -- #{error}")
       end
       plant.save!
     rescue => error
-      TechReport.create!(body: "PLANT CREATE:: #{e[:name]} -- #{error}")
+      TechReport.create!(body: "PLANT CREATE:: #{tmp_payload["name"]} -- #{error}")
+    end
+  end
+
+  ###################
+  ###################
+  ###################
+
+  task :update_from_cli, [:name, :fields, :payload] => :environment do |t, args|
+    Rails.logger = Logger.new(STDOUT)
+
+    tmp_payload = JSON.parse(args[:payload].tr("\\", ""))
+    tmp_fields = args[:fields].split(" ")
+    plant = Plant.find_by(name: args[:name])
+
+    puts args[:name]
+    puts tmp_payload
+    puts tmp_fields
+    puts plant
+
+    if tmp_fields.include?("1")
+      plant.name = tmp_payload["name"]
+    end
+
+    if tmp_fields.include?("2")
+      height = tmp_payload["height"].split("-")
+      plant.height_low = height[0].to_i
+      height.count == 1 ?
+        plant.height_high = height[0].to_i
+        : plant.height_high = height[1].to_i
+    end
+
+    if tmp_fields.include?("3")
+      bloss_start = []
+      tmp_payload["blossoming_start"].split(", ").each do |e|
+        bloss_start << e.to_i
+      end
+      bloss_end = []
+      tmp_payload["blossoming_end"].split(", ").each do |e|
+        bloss_end << e.to_i
+      end
+      plant.blossoming_start = bloss_start
+      plant.blossoming_end = bloss_end
+    end
+
+    if tmp_fields.include?("4")
+      plant.type_id = Type.find_or_create_by(name: tmp_payload["type"]).uuid
+    end
+
+    if tmp_fields.include?("5")
+      shapes = []
+      tmp_payload["shapes"].split(", ").each do |e|
+        shapes << Shape.find_or_create_by(name: e).uuid
+      end
+      plant.shape_ids = shapes
+    end
+
+    if tmp_fields.include?("6")
+      grounds = []
+      tmp_payload["grounds"].split(", ").each do |e|
+        grounds << GroundType.find_or_create_by(name: e).uuid
+      end
+      plant.ground_ids = grounds
+    end
+
+    if tmp_fields.include?("7")
+      plant.ph_range_low = tmp_payload["ph"].split(", ").last.to_f
+      plant.ph_range_high = tmp_payload["ph"].split(", ").first.to_f
+    end
+
+    if tmp_fields.include?("8")
+      plant.rusticity = tmp_payload["rusticity"]
+    end
+
+    if tmp_fields.include?("9")
+      plant.water_need = tmp_payload["water_need"]
+    end
+
+    if tmp_fields.include?("10")
+      plant.sun_need = tmp_payload["sun_need"]
+    end
+
+    if tmp_fields.include?("11")
+      colors = []
+      tmp_payload["colors"].split(", ").each do |e|
+        colors << Color.find_or_create_by(name: e).uuid
+      end
+      plant.color_ids = colors
+    end
+
+    if tmp_fields.include?("12")
+      periodicities = []
+      tmp_payload["periodicities"].split(", ").each do |e|
+        periodicities << Periodicity.find_or_create_by(name: e).uuid
+      end
+      plant.periodicities = periodicities
+    end
+
+    if tmp_fields.include?("13")
+      plant.description = tmp_payload["description"]
+    end
+
+    if tmp_fields.include?("14")
+      plant.tips = tmp_payload["tips"]
+    end
+
+    if tmp_fields.include?("15")
+      plant.model = tmp_payload["model"]
+    end
+
+    if tmp_fields.include?("16")
+      plant.remote_photo_url = tmp_payload["photo_url"]
+    end
+
+    begin
+      plant.save!
+    rescue => error
+      TechReport.create!(body: "PLANT CREATE:: #{tmp_payload["name"]} -- #{error}")
     end
   end
 end
